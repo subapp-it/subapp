@@ -101,7 +101,7 @@
                   Termini e Condizioni
                 </a>
                 |
-                <a class="cursor-pointer" @click="window.open('/public/info&privacy.pdf')">
+                <a class="cursor-pointer" @click=downloadInfoPrivacy>
                   Privacy Policy
                 </a>
                 |
@@ -236,6 +236,9 @@ export default {
     goToCookies () {
       const routeData = this.$router.resolve({ name: 'cookiePolicy' })
       window.open(routeData.href, '_blank')
+    },
+    downloadInfoPrivacy () {
+      window.open('/public/info&privacy.pdf')
     }
   },
   watch: {
