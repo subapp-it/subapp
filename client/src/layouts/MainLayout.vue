@@ -85,9 +85,6 @@
         <div class="flex column justify-center col-md-2">
           <q-toolbar>
             <q-toolbar-title>
-              <q-avatar>
-                <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">
-              </q-avatar>
               SubApp
             </q-toolbar-title>
           </q-toolbar>
