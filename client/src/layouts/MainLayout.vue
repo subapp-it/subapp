@@ -101,11 +101,11 @@
                   Termini e Condizioni
                 </a>
                 |
-                <a>
+                <a class="cursor-pointer" @click="window.open('/public/info&privacy.pdf')">
                   Privacy Policy
                 </a>
                 |
-                <a>
+                <a class="cursor-pointer" @click="$router.push('cookiePolicy')">
                   Cookie policy
                 </a>
               </div>
