@@ -12,9 +12,6 @@
     <div class="col-9 self-start">
       <h6 class="no-margin">Articolo 1. Definizioni</h6>
       <br>
-      <p>
-        Nelle presenti Condizioni Generali, qualora utilizzati con lettera maiuscola, i seguenti termini avranno il significato loro *infra *attribuito (tanto al singolare che al plurale)
-      </p>
     </div>
     <div class="col-9 self-start">
       <p>
@@ -24,13 +21,13 @@
         <br><br>
         1.2.  PUBBLICITÀ: una pubblicità sulla Piattaforma od altra richiesta inviata per mezzo della Piattaforma in cui una commissione viene offerta da un Committente;
         <br><br>
-        1.3.  CONDIZIONI GENERALI: le presenti condizioni generali, indipendentemente dalla forma in cui esse sono comunicate
+        1.3.  CONDIZIONI GENERALI: le presenti condizioni generali, indipendentemente dalla forma in cui esse sono comunicate;
         <br><br>
-        1.4.  SERVIZIO: il Servizio offerto da SUBAPP che consiste nell’utilizzo della Piattaforma
+        1.4.  SERVIZIO: il Servizio offerto da SUBAPP che consiste nell’utilizzo della Piattaforma;
         <br><br>
         1.5.  UTENTE: ogni soggetto giuridico o professionista che si serve in qualsiasi modo della Piattaforma, e che potrà assumere la figura sia di APPALTATORE che di SUBAPPALTATORE;
         <br><br>
-        1.6.  APPALTATORE: ogni soggetto giuridico o professionista che offre l’esecuzione in subappalto di lavori/servizi/forniture a un SUBAPPALTATORE servendosi della Piattaforma
+        1.6.  APPALTATORE: ogni soggetto giuridico o professionista che offre l’esecuzione in subappalto di lavori/servizi/forniture a un SUBAPPALTATORE servendosi della Piattaforma;
         <br><br>
         1.7.  SUBAPPALTATORE: ogni soggetto giuridico o professionista che si offre, per mezzo della Piattaforma, per svolgere lavori/servizi/forniture in subappalto, su incarico di un APPALTATORE;
         <br><br>
@@ -55,7 +52,7 @@
         <br><br>
         2.5.  In nessun caso, SUBAPP accetta ovvero saranno applicabili ai rapporti tra SUBAPP e l’ UTENTE le eventuali condizioni generali applicate dall’ UTENTE o inviate dal medesimo a SUBAPP qualora non siano stato espressamente accettate per iscritto da SUBAPP.
         <br><br>
-        2.6.  Qualora una qualsiasi clausola delle presenti Condizioni Generali venga dichiarata nulla, invalida o inefficace, le altre previsioni resteranno in vigore. SUBAPP formulerà allora una nuova clausola per sostituire la clausola nulla, invalida o inefficace, che rispetti il più possibile la portata e il tenore della clausola originale
+        2.6.  Qualora una qualsiasi clausola delle presenti Condizioni Generali venga dichiarata nulla, invalida o inefficace, le altre previsioni resteranno in vigore. SUBAPP formulerà allora una nuova clausola per sostituire la clausola nulla, invalida o inefficace, che rispetti il più possibile la portata e il tenore della clausola originale.
       </p>
     </div>
     <div class="col-9 self-start">
@@ -94,7 +91,7 @@
       <p>
         6.1.  L’ UTENTE garantisce che tutti i dati, ivi inclusi, a mero titolo esemplificativo ma non esaustivo, il suo nome/ragione sociale, l’indirizzo di residenza (anche fiscale) ovvero sede sociale, e-mail usate e fornite nel contesto del Servizio siano completi, corretti ed aggiornati e che userà il Servizio unicamente per sé stesso. Inoltre l’ UTENTE garantisce: (a) di essere autorizzato ad usare i Servizi e che l’utilizzo dei servizi non comporta, in alcun modo, violazione delle norme di legge applicabile; di essere iscritto nel registro della Camera di Commercio, che manterrà tale iscrizione durante il Contratto e che la detta iscrizione riguardi il campo in cui l’UTENTE opera. In caso di modifica, SUBAPP comunicherà all’ UTENTE i nuovi requisiti qualitativi prima della loro entrata in vigore, concedendogli un termine ragionevole per adeguarsi e soddisfare a tali nuovi requisiti.
         <br><br>
-        6.2.  L’ UTENTE caricherà o potrà rispondere alle RDO – con lo scopo di ottenere una proposta di Subappalto da parte di un Appaltatore. L’assenza di offerte non potrà essere imputabile a SUBAPP, e pertanto non darà vita a risarcimenti di alcun tipo.
+        6.2.  L’ UTENTE caricherà o potrà rispondere alle RDO – con lo scopo di ottenere una proposta di Subappalto da parte di un Appaltatore. L’assenza di offerte non potrà essere imputabile a SUBAPP, e pertanto non darà vita a risarcimenti di alcun tipo. L’APPALTATORE, una volta ricevute le offerte, potrà ricontattare il SUBAPPALTATORE la cui offerta sarà ritenuta migliore.  L’APPALTATORE sarà libero di scegliere l’offerta migliore valutando gli elementi soggettivi ed oggettivi che riterrà più opportuno, a mero titolo esemplificativo ma non esaustivo, ribasso più conveniente, regolarità documenti, presentazione più convincente, etc.
         <br><br>
         6.3.  L’ UTENTE è personalmente responsabile del contenuto dei dati da lui pubblicati sulla Piattaforma. Egli garantisce che il contenuto di tali dati sia corretto, aggiornato e veritiero, che non violi la legislazione e regolamentazione applicabile, e che non sia illegittimo. Inoltre l’ UTENTE garantisce che nel fornire tali dati egli non agisce in modo scorretto o sleale nei confronti degli altri Utenti e che, in nessun modo, non violerà gli interessi ovvero lederà la buona fama di SUBAPP.
         <br><br>
@@ -102,7 +99,7 @@
         <br><br>
         6.5.  SUBAPP si riserva il diritto di cambiare e/o modificare le informazioni fornite dall’ UTENTE. SUBAPP si conserva altresì il diritto – ma non sarà in nessun modo tenuto a esercitare il proprio diritto – di rifiutare la pubblicazione o di eliminare dalla Piattaforma file o informazioni, proposte ed altri dati, ad esempio perché questi sono non veritieri, contrari alla legge o illegittimi ovvero lesivi di diritti di terzi, senza che l’ UTENTE possa far valere alcun diritto di risarcimento dei danni.
         <br><br>
-        6.6.  I Contratti tra APPALTATORE e SUBAPPALTATORE sono stipulati nel momento che L’APPALTATORE afferma esplicitamente al SUBAPPALTATORE l'accettazione del Contratto. SUBAPP non è parte dei Contratti conclusi tra APPALTATORE e SUBAPPALTATORE. SUBAPP non potrà esercitare – e non eserciterà – pertanto alcun controllo sulla qualità, sicurezza o legalità dei lavori/forniture/servizi, sulla correttezza delle offerte, la capacità dell’ APPALTATORE di far effettuare le Prestazioni e/o la competenza del SUBAPPALTATORE a eseguire le Prestazioni. L’UTENTE terrà indenne e manlevata SUBAPP da ogni e qualsiasi domanda di terzi avente a oggetto quanto precede.
+        6.6.  I Contratti tra APPALTATORE e SUBAPPALTATORE sono stipulati nel momento che l’APPALTATORE ed il SUBAPPALTATORE stipuleranno un Contratto. SUBAPP non è parte dei Contratti conclusi tra APPALTATORE e SUBAPPALTATORE, che sono conclusi al di fuori della piattaforma. SUBAPP non potrà esercitare – e non eserciterà – pertanto alcun controllo sulla qualità, sicurezza o legalità dei lavori/forniture/servizi, sulla correttezza delle offerte, la capacità dell’ APPALTATORE di far effettuare le Prestazioni e/o la competenza del SUBAPPALTATORE a eseguire le Prestazioni. L’UTENTE terrà indenne e manlevata SUBAPP da ogni e qualsiasi domanda di terzi avente a oggetto quanto precede.
         <br><br>
         6.7.  L' uso dei dati (personali) che l’ UTENTE riceve per mezzo della Piattaforma può avvenire unicamente allo scopo per il quale sono stati forniti. Non è consentito all’ UTENTE di utilizzare, elaborare o comunque trattare tali dati per finalità diverse, ivi compreso - ma non limitata a - qualunque forma di comunicazione indesiderata (spam). Non è nemmeno permesso raccogliere i dati personali (compresi gli indirizzi e-mail) degli Utenti a qualsiasi scopo.
       </p>
@@ -155,7 +152,7 @@
       <br>
       <p>
         12.1. Qualora l’esecuzione degli obblighi di cui alle presenti Condizioni Generali ovvero al Contratto sia ritardata e/o impedita da cause di forza maggiore, SUBAPP non potrà essere ritenuta, in alcun modo, responsabile per l’eventuale ritardo e/o inadempimento delle proprie obbligazione. Per "forza maggiore" si intendono qualsiasi evento e/o fatto indipendente dalla volontà di SUBAPP, avente carattere imprevedibile e straordinario, anche attribuibile a fornitori ovvero qualsivoglia terzo e dei quali SUBAPP si serva, ovvero in caso di hacks, mancato funzionamento di internet e/o mancata connessione e problematiche riconducibili al
-        malfunzionamento di SERVER, sia interni che esterni
+        malfunzionamento di SERVER, sia interni che esterni.
       </p>
     </div>
     <div class="col-9 self-start">
@@ -193,7 +190,7 @@
       </p>
     </div>
     <div class="col-9 self-start">
-      <h6 class="no-margin">Articolo 17. Durata e terminazione dei Contratti a durata indeterminata</h6>
+      <h6 class="no-margin">Articolo 17. Durata e terminazione dei Contratti</h6>
       <br>
       <p>
         17.1. Salvo che sia previsto diversamente ovvero diversamente concordato tra le parti, il Contratto tra SUBAPP e l’ UTENTE è a tempo determinato.
@@ -231,11 +228,11 @@
       <h6 class="no-margin">Articolo 20. Legge regolatrice e risoluzione delle controversie</h6>
       <br>
       <p>
-        20.1.  Alle presenti Condizioni Generali, ai Contratti tra SUBAPP e l’ UTENTE, ad ogni utilizzo della Piattaforma e a tutte le controversie (per qualunque causa e motivo) si applicherà il diritto italiano
+        20.1.  Alle presenti Condizioni Generali, ai Contratti tra SUBAPP e l’ UTENTE, ad ogni utilizzo della Piattaforma e a tutte le controversie (per qualunque causa e motivo) si applicherà il diritto italiano.
         <br><br>
         20.2. Per qualsiasi controversia insorta tra le parti in relazione all’applicazione, interpretazione ed esecuzione delle presenti Condizioni Generali, il Contratto e/o l'utilizzo della Piattaforma, per qualunque causa o motivo, saranno sottoposte alla competenza esclusiva del Foro di Napoli Nord, Italia
         <br><br><br>
-        Villaricca, maggio 2021
+        Villaricca, aprile 2021
         <br><br><br><br><br><br><br><br><br>
       </p>
     </div>
