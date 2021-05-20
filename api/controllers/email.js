@@ -1,17 +1,15 @@
 /* eslint-disable no-param-reassign,no-underscore-dangle */
-const sgMail = require('@sendgrid/mail')
+const nodemailer = require('../../utils/nodeMailer')
 
-exports.send = (req, res, next) => {
+exports.send = async (req, res, next) => {
   const email = req.body
-  sgMail
-    .send(email)
-    .then(() => {
-      res.status(200).json({ message: 'Email inviata con successo. Ti risponderemo al più presto!' })
-    })
-    .catch((error) => {
+  await nodemailer.smtpTransport.sendMail(email, (error, info) => {
+    if (error) {
       if (!error.statusCode) {
         error.statusCode = 500
       }
       next(error)
-    })
+    }
+    res.status(200).json({ message: 'Email inviata con successo. Ti risponderemo al più presto!' })
+  })
 }

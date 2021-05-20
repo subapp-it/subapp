@@ -1,10 +1,9 @@
-/* eslint-disable no-param-reassign,no-underscore-dangle */
+/* eslint-disable no-param-reassign,no-underscore-dangle,max-len */
 const { validationResult } = require('express-validator')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-const sgMail = require('@sendgrid/mail')
 const config = require('../../config')
-const sendGrid = require('../../utils/sendGrid')
+const nodeMailer = require('../../utils/nodeMailer')
 const User = require('../../models/user')
 
 exports.signup = (req, res, next) => {
@@ -23,19 +22,16 @@ exports.signup = (req, res, next) => {
       const user = new User(body)
       return user.save()
     })
-    .then((user) => {
+    .then(async (user) => {
       user.payed = undefined
       user.admin = undefined
-      sendGrid.sendGridOptions.msgSignup.to = user.username
-      sgMail
-        .send(sendGrid.sendGridOptions.msgSignup)
-        .then(() => {
-          console.log(`Email sent to ${sendGrid.sendGridOptions.msgSignup.to}`)
-        })
-        .catch((error) => {
-          // TODO inviare mail a tutino dicendo di riprovare a inviare la mail a questo utente.
-          console.error(error)
-        })
+      nodeMailer.nodeMailerOptions.msgSignup.to = user.username
+      await nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.msgSignup, (error, info) => {
+        if (error) {
+          return console.log(error)
+        }
+        console.log('Message sent: %s', info.messageId)
+      })
       res.status(200).json({ user })
     })
     .catch((err) => {
@@ -111,10 +107,10 @@ exports.forgottenPassword = (req, res, next) => {
         throw error
       }
       findedUser = user
-      sendGrid.sendGridOptions.forgottenPasswordMsg.html += ` http://localhost:8080/forgotPassword/${user._id}` // TODO cambiare con il dominio quando andrà online
-      sendGrid.sendGridOptions.forgottenPasswordMsg.to = user.username
-      console.log(sendGrid.sendGridOptions.forgottenPasswordMsg.html)
-      return sgMail.send(sendGrid.sendGridOptions.forgottenPasswordMsg)
+      nodeMailer.nodeMailerOptions.forgottenPasswordMsg.html += `https://www.subapp.it/forgotPassword/${user._id}`
+      nodeMailer.nodeMailerOptions.forgottenPasswordMsg.to = user.username
+      console.log(nodeMailer.nodeMailerOptions.forgottenPasswordMsg.html)
+      return nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.forgottenPasswordMsg)
     })
     .then(() => {
       res.status(200).json({
