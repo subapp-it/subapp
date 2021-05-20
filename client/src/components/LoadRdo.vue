@@ -650,7 +650,7 @@ export default {
         if (this.fileToShare.includes('soa')) { soaUrl = await this.fetchFile({ pathParam: this.userLogged.soaFile.key }) }
         const infoRibassoEmail = {
           to: this.rdo.user.username,
-          from: 'dario.cascone93@gmail.com',
+          from: 'info@subapp.it',
           subject: 'Ricezione offerta per RDO: ' + this.rdo.description,
           html: 'Spett.le ' + this.rdo.contractor + ', <br/>' +
             'l\'operatore economico <strong>' + this.userLogged.companyName + '</strong> ha inviato la seguente offerta: <br/>' +

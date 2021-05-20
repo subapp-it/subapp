@@ -361,8 +361,8 @@ export default {
       if (!this.$v.$invalid) {
         this.$q.loading.show()
         const infoEmail = {
-          to: 'antonio.cacciapuoti@live.com',
-          from: 'dario.cascone93@gmail.com',
+          to: 'info@subapp.it',
+          from: this.emailToSend.emailFrom,
           subject: 'Richiesta info - from: ' + this.emailToSend.emailFrom,
           html: 'from: ' + this.emailToSend.emailFrom + '<br><br>' + this.emailToSend.emailBody
         }
