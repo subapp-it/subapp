@@ -153,7 +153,7 @@ exports.insertRdo = async (req, res, next) => {
     }
     let mailingList = []
     // recupero tutti gli user
-    const users = User.find()
+    const users = await User.find()
     // per ogni user recupero le preferenze di rdo
     for (let usr in users) {
       let match = false
