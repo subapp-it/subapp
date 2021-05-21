@@ -1,7 +1,8 @@
-/* eslint-disable eqeqeq,no-underscore-dangle,prefer-const,no-restricted-syntax,no-await-in-loop,no-unused-expressions,no-sequences,max-len,no-param-reassign */
+/* eslint-disable eqeqeq,no-underscore-dangle,prefer-const,no-restricted-syntax,no-await-in-loop,no-unused-expressions,no-sequences,max-len,no-param-reassign,no-lonely-if,guard-for-in */
 const Rdo = require('../../models/rdo')
 const User = require('../../models/user')
 const { clearFile } = require('../../utils/utils')
+const nodeMailer = require('../../utils/nodeMailer')
 
 const removeRdo = async (rdoId, userId) => {
   let indexToRemove
@@ -136,24 +137,72 @@ exports.findOneRdo = (req, res, next) => {
     })
 }
 
-exports.insertRdo = (req, res, next) => {
-  const { body } = req
-  const { userId } = req.params
-  const rdo = new Rdo(body)
-  return rdo.save()
-    .then((rdoUpdated) => User.findById(userId).then((user) => {
-      user.loadedRdos.push(rdoUpdated)
-      return user.save()
-    }))
-    .then(() => {
-      res.status(200).json({ rdo })
-    })
-    .catch((err) => {
-      if (!err.statusCode) {
-        err.statusCode = 500
+exports.insertRdo = async (req, res, next) => {
+  try {
+    const { body } = req
+    const { userId } = req.params
+    const rdo = new Rdo(body)
+    const rdoUpdated = await rdo.save()
+    const user = await User.findById(userId)
+    user.loadedRdos.push(rdoUpdated)
+    await user.save()
+    const rdoToFind = {
+      subCategory: rdoUpdated.rdos._id,
+      import: rdoUpdated.import,
+      regionOfInterest: rdoUpdated.regionOfInterest._id
+    }
+    let mailingList = []
+    // recupero tutti gli user
+    const users = await User.find()
+    // per ogni user recupero le preferenze di rdo
+    for (let usr in users) {
+      let match = false
+      let { rdos } = usr
+      // per ogni preferenza controllo se gli array di subcategory, imports e regionsOfInterest contengono la tupla relativa alla rdo appena caricata
+      if (rdos != null && rdos.first != null) {
+        let matchFirstSubcategories = rdos.first.subCategory.filter((subCat) => subCat._id == rdoToFind.subCategory)
+        let matchFirstImports = rdos.first.subCategory.filter((imp) => imp == rdoToFind.import)
+        let matchFirstRegions = rdos.first.subCategory.filter((region) => region._id == rdoToFind.regionOfInterest)
+        if (matchFirstSubcategories.length > 0 && matchFirstImports.length > 0 && matchFirstRegions.length > 0) {
+          match = true
+        } else {
+          // gli if sono annidati in modo da entrarci solo se non è stato ancora trovato un match
+          if (rdos != null && rdos.second != null) {
+            let matchSecondSubcategories = rdos.second.subCategory.filter((subCat) => subCat._id == rdoToFind.subCategory)
+            let matchSecondImports = rdos.second.subCategory.filter((imp) => imp == rdoToFind.import)
+            let matchSecondRegions = rdos.second.subCategory.filter((region) => region._id == rdoToFind.regionOfInterest)
+            if (matchSecondSubcategories.length > 0 && matchSecondImports.length > 0 && matchSecondRegions.length > 0) {
+              match = true
+            } else if (rdos != null && rdos.third != null) {
+              let matchThirdSubcategories = rdos.third.subCategory.filter((subCat) => subCat._id == rdoToFind.subCategory)
+              let matchThirdImports = rdos.third.subCategory.filter((imp) => imp == rdoToFind.import)
+              let matchThirdRegions = rdos.third.subCategory.filter((region) => region._id == rdoToFind.regionOfInterest)
+              if (matchThirdSubcategories.length > 0 && matchThirdImports.length > 0 && matchThirdRegions.length > 0) {
+                match = true
+              }
+            }
+          }
+        }
       }
-      next(err)
-    })
+      // se ho trovato un match salvo la username nella lista di indirizzi di posta
+      if (match) mailingList.push(usr.username)
+    }
+    for (let recipient in mailingList) {
+      nodeMailer.nodeMailerOptions.rdoOfInterestMsg.to = recipient
+      await nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.rdoOfInterestMsg, (error, info) => {
+        if (error) {
+          console.log(error)
+        }
+        console.log('Message sent: %s', info.messageId)
+      })
+    }
+    res.status(200).json({ rdo })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
 }
 
 exports.updateRdo = (req, res, next) => {

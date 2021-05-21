@@ -30,6 +30,16 @@ exports.nodeMailerOptions = {
     subject: 'SubApp.it: Reimposta password',
     html: 'Gentile cliente,<br/><br/>'
         + 'per completare il reimposta password, acceda al link di seguito riportato<br/>'
+  },
+  rdoOfInterestMsg: {
+    to: '', // Change to your recipient,
+    from: config.env.MAIL_FROM, // Change to your verified sender
+    subject: 'SubApp.it: è stata caricata una nuova rdo',
+    html: 'Gentile cliente,<br/><br/>'
+        + 'è stata caricata una nuova rdo in linea con le sue preferenze.<br/>'
+        + 'Acceda alla bacheca cliccando su: <a target="_blank" href="www.subapp.it">Subapp.it</a><br/>'
+        + '<br/>Distinti Saluti,<br/>'
+        + '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
   }
 }
 
