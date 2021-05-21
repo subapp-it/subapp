@@ -107,6 +107,7 @@ import { mapActions } from 'vuex'
 import { date } from 'quasar'
 import Modal from 'components/Modal'
 import ConfirmDialog from 'components/ConfirmDialog'
+import { nodemailer } from 'src/costants/options'
 
 export default {
   name: 'Admin',
@@ -187,7 +188,8 @@ export default {
       'fetchUsers',
       'updateLoggedUser',
       'deleteUser',
-      'fetchFile'
+      'fetchFile',
+      'sendMail'
     ]),
     async editSelectedUserSuccess () {
       await this.loadUsers()
@@ -230,7 +232,7 @@ export default {
       const data = await this.fetchFile(obj)
       window.open(data.url)
     },
-    confirmUser (user) {
+    async confirmUser (user) {
       if (user) {
         user.payed = true
         user.subscriptionDate = new Date()
@@ -240,6 +242,17 @@ export default {
           user.biennial = true
         }
         this.update(user)
+        const confirmActivationEmail = {
+          to: user.username,
+          from: nodemailer.from,
+          subject: 'Subapp.it: Conferma attivazione account',
+          html: 'Gentile cliente,<br/><br/>' +
+            'confermiamo la corretta attivazione del suo account per la durata di anni: ' + (this.subscriptionPeriod === 1 ? '1' : '2') + '<br/>' +
+            'Acceda al portale cliccando su: <a target="_blank" href="www.subapp.it">Subapp.it</a><br/>' +
+            '<br/>Distinti Saluti,<br/>' +
+            '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
+        }
+        await this.sendMail(confirmActivationEmail)
       }
     },
     async update (user) {

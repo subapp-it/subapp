@@ -46,7 +46,12 @@ const presentationFiles = [
 
 ]
 
+const nodemailer = {
+  from: 'info@subapp.it'
+}
+
 exports.legalFormOptions = legalFormOptions
 exports.imports = imports
 exports.compCatOptions = compCatOptions
 exports.presentationFiles = presentationFiles
+exports.nodemailer = nodemailer
