@@ -1072,8 +1072,7 @@ export default {
       this.durcRegolarityFile = new File([''], 'Durc')
     },
     goToPrivacy () {
-      const link = process.env.NODE_ENV === 'development' ? 'localhost:3000/public/info&privacy.pdf' : '/public/info&privacy.pdf'
-      window.open(link, '_blank')
+      window.open('/public/info&privacy.pdf')
     },
     goToTeC () {
       const routeData = this.$router.resolve({ name: 'termCondition' })
