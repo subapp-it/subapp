@@ -675,7 +675,7 @@ export default {
           html: 'Spett.le ' + this.userLogged.companyName + ', <br/>' +
             'confermiamo l\'invio dell\'offerta per la gara in oggetto all\'operatore economico ' + this.rdo.user.companyName + '<br/>' +
             'Sarà L\'Appaltatore a ricontattarvi, qualora riterrà la vs. offerta più soddisfacente.' + this.ribasso + '%</strong><br/><br/>' +
-            'Ribasso offerto: ' + this.ribasso + '<br/>' +
+            'Ribasso offerto: ' + this.ribasso + '%<br/>' +
             'Allegati: <br/>' +
             (this.fileToShare.length > 0 ? 'Di seguito trova i link ai file relativi all\'azienda: <br/>' : '') +
             (this.fileToShare.includes('certificate') === true ? '<a href="' + certificateUrl.url + '">Certificato o Visura Camerale</a><br/>' : '') +
