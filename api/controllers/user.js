@@ -9,7 +9,7 @@ const s3 = new AWS.S3({
   accessKeyId: config.env.AWS_ID,
   secretAccessKey: config.env.AWS_SECRET,
   signatureVersion: 'v4',
-  region: 'eu-west-3'
+  region: 'eu-west-2'
 })
 
 const update = (req, res, next, loggedIn) => {
