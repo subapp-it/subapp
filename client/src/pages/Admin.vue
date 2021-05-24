@@ -91,6 +91,14 @@
               <q-icon class="text-accent cursor-pointer" name="file_download" style="font-size: 2rem;" @click="downloadFile(props.row.user.durcRegolarityFile.Key)"></q-icon>
             </div>
           </q-td>
+          <q-td  key="artSixA" :props="props">
+            <div v-if="props.row.user.regulationLetterA" class="flex column items-center justify-around full-width">
+              <q-icon  class="text-positive cursor-pointer" style="font-size: 2rem" name="done"></q-icon>
+            </div>
+            <div v-else>
+              <q-icon  class="text-negative cursor-pointer" style="font-size: 2rem" name="error"></q-icon>
+            </div>
+          </q-td>
           <q-td key="delete" :props="props" >
             <q-icon style="font-size: 2rem;" name="delete_forever" class="text-negative cursor-pointer" @click="openConfirmDialog(props.row.user, 'Sicuro di voler eliminare l\'utente selezionato?', removeUser)"></q-icon>
           </q-td>
@@ -171,6 +179,7 @@ export default {
         { name: 'lendingFile', required: true, label: 'Presentazione File', align: 'center' },
         { name: 'certificateFile', required: true, label: 'Certificato o Visura Camerale File', align: 'center' },
         { name: 'durcRegolarityFile', required: true, label: 'Regolarità Durc File', align: 'center' },
+        { name: 'artSixA', required: true, label: 'Art.6 Let.a', align: 'center' },
         { name: 'delete', required: true, label: 'Elimina', align: 'center' }
       ],
       data: []

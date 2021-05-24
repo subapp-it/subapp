@@ -152,13 +152,10 @@ exports.insertRdo = async (req, res, next) => {
       regionOfInterest: rdoUpdated.regionOfInterest._id
     }
     let mailingList = []
-    // recupero tutti gli user
     const users = await User.find()
-    // per ogni user recupero le preferenze di rdo
     for (let usr in users) {
       let match = false
       let { rdos } = usr
-      // per ogni preferenza controllo se gli array di subcategory, imports e regionsOfInterest contengono la tupla relativa alla rdo appena caricata
       if (rdos != null && rdos.first != null) {
         let matchFirstSubcategories = rdos.first.subCategory.filter((subCat) => subCat._id == rdoToFind.subCategory)
         let matchFirstImports = rdos.first.subCategory.filter((imp) => imp == rdoToFind.import)
@@ -184,7 +181,6 @@ exports.insertRdo = async (req, res, next) => {
           }
         }
       }
-      // se ho trovato un match salvo la username nella lista di indirizzi di posta
       if (match) mailingList.push(usr.username)
     }
     for (let recipient in mailingList) {
