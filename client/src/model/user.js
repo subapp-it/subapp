@@ -31,5 +31,6 @@ export default class user {
     this.subscriptionDate = null
     this.blocked = false
     this.loadedRdos = []
+    this.regulationLetterA = false
   }
 }

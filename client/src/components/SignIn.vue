@@ -394,7 +394,7 @@
                      :rules="[ (val) => isValid('firstRegionsOfInterest', val, $v) ]"
           />
           <div class="desktop-only col-12 col-md-3">
-            <q-btn v-if="!needSecondRdo && !isEditing" flat color="secondary" icon-right="add" label="Aggiungi RDO" @click="needSecondRdo = true"/>
+            <q-btn v-if="!needSecondRdo && !isEditing" push rounded style="margin: 10px"  color="secondary" icon-right="add" label="Aggiungi RDO" @click="needSecondRdo = true"/>
           </div>
           <div v-if="needSecondRdo" class="col-12 col-md-3 q-pt-md order-7">
             Richieste di offerta *
@@ -498,9 +498,9 @@
                      :rules="[ (val) => isValid('secondRegionsOfInterest', val, $v) ]"
           />
 
-          <div v-if="needSecondRdo" class="desktop-only col-12 col-md-3 flex">
-            <q-btn v-if="!needThirdRdo  && !isEditing" flat color="secondary" icon-right="add" label="Aggiungi RDO" @click="needThirdRdo = true" />
-            <q-btn v-if="needSecondRdo  && !isEditing" flat color="negative" icon-right="remove" label="Rimuovi RDO" @click="needSecondRdo = false"/>
+          <div v-if="needSecondRdo" class="desktop-only col-12 col-md-3">
+            <q-btn v-if="!needThirdRdo  && !isEditing" push rounded style="margin: 10px" color="secondary" icon-right="add" label="Aggiungi RDO" @click="needThirdRdo = true" />
+            <q-btn v-if="needSecondRdo  && !isEditing" push rounded style="margin: 10px"  color="negative" icon-right="remove" label="Rimuovi RDO" @click="needSecondRdo = false"/>
           </div>
           <div v-if="needThirdRdo" class="col-12 col-md-3 q-pt-md order-7">
             Richieste di offerta *
@@ -604,8 +604,8 @@
                      :rules="[ (val) => isValid('thirdRegionsOfInterest', val, $v) ]"
           />
 
-          <div v-if="needThirdRdo" class="desktop-only col-12 col-md-3 flex">
-            <q-btn v-if="needThirdRdo && !isEditing" flat color="negative" icon-right="remove" label="Rimuovi RDO" @click="needThirdRdo = false"/>
+          <div v-if="needThirdRdo" class="desktop-only col-12 col-md-3">
+            <q-btn v-if="needThirdRdo && !isEditing" push rounded style="margin: 10px"  color="negative" icon-right="remove" label="Rimuovi RDO" @click="needThirdRdo = false"/>
           </div>
           <!--riga-->
           <div class="col-12 col-md-3 q-pt-md order-15">
@@ -752,22 +752,34 @@
       >
         <div class="row wrap justify-center content-center no-padding no-margin q-gutter-x-md q-gutter-y-xs">
           <div class="col-12 col-md-9 q-pt-md">
-           * Tutti i campi sono obbligatori.
+           * Campi obbligatori.
           </div>
           <div class="col-12 col-md-9 q-pt-md">
            Al termine, riceverai una mail con le istruzioni da seguire per effettuare il pagamento e completare il processo di registrazione.
           </div>
           <div class="col-12 col-md-9 q-pt-md">
-            Leggi e accetta la <a class="hyperlink"  @click="goToPrivacy">Privacy</a> di Subapp per proseguire con la registrazione.
+            Leggi e accetta la <a class="hyperlink"  @click="goToPrivacy">Privacy</a> di Subapp per proseguire con la registrazione. *
+          </div>
+          <div class="col-12 col-md-9 q-pt-md">
+            Ai sensi dell’art. 6 lett. a) del Regolamento
           </div>
           <div class="col-12 col-md-9 q-pt-md q-pb-md">
             <div class="q-gutter-sm">
-              <q-radio dense v-model="regulation" val="true" label="Accetto" />
-              <q-radio dense v-model="regulation" val="false" label="Non Accetto" />
+              <q-radio dense v-model="user.regulationLetterA" :val="true" label="Acconsento" />
+              <q-radio dense v-model="user.regulationLetterA" :val="false" label="Non Acconsento" />
             </div>
           </div>
           <div class="col-12 col-md-9 q-pt-md">
-            Leggi e accetta i <a class="hyperlink" @click="goToTeC">Termini e Condizioni</a> di Subapp per proseguire con la registrazione.
+            Ai sensi dell’art. 6 lett. b) del Regolamento *
+          </div>
+          <div class="col-12 col-md-9 q-pt-md q-pb-md">
+            <div class="q-gutter-sm">
+              <q-radio dense v-model="regulationLetterB" val="true" label="Acconsento" />
+              <q-radio dense v-model="regulationLetterB" val="false" label="Non Acconsento" />
+            </div>
+          </div>
+          <div class="col-12 col-md-9 q-pt-md">
+            Leggi e accetta i <a class="hyperlink" @click="goToTeC">Termini e Condizioni</a> di Subapp per proseguire con la registrazione. *
           </div>
           <div class="col-12 col-md-9 q-pt-md q-pb-md">
             <div class="q-gutter-sm">
@@ -775,25 +787,11 @@
               <q-radio dense v-model="termAndCondition" val="false" label="Non Accetto" />
             </div>
           </div>
-          <div v-if="false" class="col-12 col-md-9 q-pt-md">
-            Ai sensi dell’art. 46 del D.P.R. 28 dicembre 2000 n. 445, la Ditta, consapevole delle sanzioni penali, previste dall’art. 76 del D.P.R. n. 445/2000, per le ipotesi di falsità in atti e dichiarazioni mendaci ivi indicate, dichiara:
-            <ul>
-              <li>di non trovarsi nelle condizioni previste dall’art. 80 del Decreto Legislativo 18 aprile 2016 n. 50 e s.m.i.</li>
-              <li>di non essere oggetto di provvedimenti di sospensione o interdittivi di cui all’art. 14, comma 1, D.Lgs. 81/08</li>
-              <li>di essere in regola con quanto previsto con il D.Lgs 81/08, in materia di sicurezza</li>
-              <li>di conoscere i limiti previsti dalla disciplina del subappalto</li>
-            </ul>
-          </div>
-          <div v-if="false" class="col-12 col-md-9 q-pb-md">
-            <div class="q-gutter-sm">
-              <q-radio dense v-model="compDeclaration" val="true" label="Si" />
-              <q-radio dense v-model="compDeclaration" val="false" label="No" />
-            </div>
-          </div>
+
           <div v-if="false" class="col-12 col-md-9 q-pt-md row">
             <div class="col-12 company-category">
               <div>
-              Ai sensi dell’art. 3 – aa, Decreto Legislativo n. 50/2016 e s.m.i., appartiene alla categoria:
+                Ai sensi dell’art. 3 – aa, Decreto Legislativo n. 50/2016 e s.m.i., appartiene alla categoria:
               </div>
               <div class="q-pt-md q-pb-md">
                 <q-option-group
@@ -813,7 +811,7 @@
             <q-btn v-if="step > 1" flat color="primary" @click="$refs.stepper.previous()" label="Indietro" class="q-ml-sm" />
           </div>
           <div>
-            <q-btn type="submit" :disable="(termAndCondition === 'false' || regulation === 'false') && step === 3"
+            <q-btn type="submit" :disable="(termAndCondition === 'false' || regulationLetterB === 'false') && step === 3"
                    color="primary" :label="getBtnLabel" />
           </div>
         </q-stepper-navigation>
@@ -885,8 +883,7 @@ export default {
       thirdRegionsOfInterest: [],
       regulation: 'false',
       termAndCondition: 'false',
-      compDeclaration: ''
-
+      regulationLetterB: 'false'
     }
   },
   props: ['showAlert', 'isEditing', 'isAdmin', 'selectedUser'],

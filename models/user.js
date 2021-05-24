@@ -129,6 +129,10 @@ const userSchema = new Schema({
   },
   loadedRdos: {
     type: Array
+  },
+  regulationLetterA: {
+    type: Boolean,
+    default: false
   }
 },
 { timestamps: true })

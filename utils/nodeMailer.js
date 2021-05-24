@@ -9,17 +9,16 @@ exports.nodeMailerOptions = {
     html: 'Gentile cliente,<br/><br/>'
         + 'per completare l\'acquisto da lei richiesto, esegua un bonifico bancario alle coordinate di seguito riportate.<br/>'
         + 'Coordinate bancarie:<br/>'
-        + 'INTESA SAN PAOLO - <strong>_______________________</strong><br/>'
-        + 'IBAN: <strong>_____________________________________</strong><br/><br/>'
+        + 'Intestato: <strong>SUBAPP.IT S.R.L.S.</strong><br/>'
+        + 'BANCA MONTE DEI PASCHI DI SIENA<br/>'
+        + 'IBAN: <strong>IT21J0103088600000001704443</strong><br/><br/>'
         + '<strong>ABBONAMENTO ANNUALE</strong><br/>'
-        + 'Descrizione: Accesso al portale per la durata di un anno<br/>'
+        + 'CAUSALE: Abbonamento per n.1 anno al portale<br/>'
         + 'Importo: <strong>€ 170,00</strong><br/>'
-        + 'Intestato a: <span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
         + '<br/><br/>'
         + '<strong>ABBONAMENTO BIENNALE</strong><br/>'
-        + 'Descrizione: Accesso al portale per la durata di due anni<br/>'
-        + 'Importo: <strong>€ 305,00</strong><br/>'
-        + 'Intestato a: <span style="color:#29ABF4">Subapp.it s.r.l.s</span><br/><br/>'
+        + 'CAUSALE: Abbonamento per n.2 anni al portale<br/>'
+        + 'Importo: <strong>€ 305,00</strong><br/><br/>'
         + 'L’accesso al portale e la fattura saranno disponibili dopo la conferma dell\'avvenuta contabilizzazione del bonifico sul conto di <span style="color:#29ABF4">Subapp.it s.r.l.s</span><br/>'
         + '<br/>Distinti Saluti,<br/>'
         + '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
@@ -34,9 +33,10 @@ exports.nodeMailerOptions = {
   rdoOfInterestMsg: {
     to: '', // Change to your recipient,
     from: config.env.MAIL_FROM, // Change to your verified sender
-    subject: 'SubApp.it: è stata caricata una nuova rdo',
+    subject: 'SubApp.it: è stata caricata rdo di tuo interesse',
     html: 'Gentile cliente,<br/><br/>'
-        + 'è stata caricata una nuova rdo in linea con le sue preferenze.<br/>'
+        + 'le informiamo che è stata caricata una RDO potenzialmente di Suo interesse.<br/>'
+        + 'La invitiamo a consultare il suo account.<br/>'
         + 'Acceda alla bacheca cliccando su: <a target="_blank" href="www.subapp.it">Subapp.it</a><br/>'
         + '<br/>Distinti Saluti,<br/>'
         + '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
