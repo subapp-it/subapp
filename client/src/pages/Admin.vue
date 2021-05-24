@@ -96,7 +96,7 @@
               <q-icon  class="text-positive cursor-pointer" style="font-size: 2rem" name="done"></q-icon>
             </div>
             <div v-else>
-              <q-icon  class="text-negative cursor-pointer" style="font-size: 2rem" name="error"></q-icon>
+              <q-icon  class="text-negative cursor-pointer" style="font-size: 2rem" name="close"></q-icon>
             </div>
           </q-td>
           <q-td key="delete" :props="props" >
@@ -179,7 +179,7 @@ export default {
         { name: 'lendingFile', required: true, label: 'Presentazione File', align: 'center' },
         { name: 'certificateFile', required: true, label: 'Certificato o Visura Camerale File', align: 'center' },
         { name: 'durcRegolarityFile', required: true, label: 'Regolarità Durc File', align: 'center' },
-        { name: 'artSixA', required: true, label: 'Art.6 Let.a', align: 'center' },
+        { name: 'artSixA', required: true, label: 'Art.6 Lett.a', align: 'center' },
         { name: 'delete', required: true, label: 'Elimina', align: 'center' }
       ],
       data: []
@@ -257,7 +257,7 @@ export default {
           subject: 'Subapp.it: Conferma attivazione account',
           html: 'Gentile cliente,<br/><br/>' +
             'confermiamo la corretta attivazione del suo account per la durata di anni: ' + (this.subscriptionPeriod === 1 ? '1' : '2') + '<br/>' +
-            'Acceda al portale cliccando su: <a target="_blank" href="www.subapp.it">Subapp.it</a><br/>' +
+            'Acceda al portale cliccando su: <a target="_blank" href="https://www.subapp.it">Subapp.it</a><br/>' +
             '<br/>Distinti Saluti,<br/>' +
             '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
         }

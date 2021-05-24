@@ -156,21 +156,39 @@ exports.insertRdo = async (req, res, next) => {
     for (let usr in users) {
       let match = false
       let { rdos } = usr
+      console.log('rdos', rdos)
+      console.log('is null:', rdos != null)
+      console.log('is first:', rdos.first != null)
       if (rdos != null && rdos.first != null) {
-        let matchFirstSubcategories = rdos.first.subCategory.filter((subCat) => subCat._id == rdoToFind.subCategory)
-        let matchFirstImports = rdos.first.subCategory.filter((imp) => imp == rdoToFind.import)
-        let matchFirstRegions = rdos.first.subCategory.filter((region) => region._id == rdoToFind.regionOfInterest)
+        console.log('1 if')
+        let matchFirstSubcategories = rdos.first.subCategory.filter((subCat) => {
+          console.log(' subCat._id', subCat._id)
+          console.log(' rdoToFind.subCategory', rdoToFind.subCategory)
+          return subCat._id == rdoToFind.subCategory
+        })
+        let matchFirstImports = rdos.first.subCategory.filter((imp) => {
+          console.log(' imp', imp)
+          console.log(' rdoToFind.import', rdoToFind.import)
+          return imp == rdoToFind.import
+        })
+        let matchFirstRegions = rdos.first.subCategory.filter((region) => {
+          console.log(' region._id', region._id)
+          console.log(' rdoToFind.regionOfInterest', rdoToFind.regionOfInterest)
+          return region._id == rdoToFind.regionOfInterest
+        })
         if (matchFirstSubcategories.length > 0 && matchFirstImports.length > 0 && matchFirstRegions.length > 0) {
           match = true
         } else {
           // gli if sono annidati in modo da entrarci solo se non è stato ancora trovato un match
           if (rdos != null && rdos.second != null) {
+            console.log('2 if')
             let matchSecondSubcategories = rdos.second.subCategory.filter((subCat) => subCat._id == rdoToFind.subCategory)
             let matchSecondImports = rdos.second.subCategory.filter((imp) => imp == rdoToFind.import)
             let matchSecondRegions = rdos.second.subCategory.filter((region) => region._id == rdoToFind.regionOfInterest)
             if (matchSecondSubcategories.length > 0 && matchSecondImports.length > 0 && matchSecondRegions.length > 0) {
               match = true
             } else if (rdos != null && rdos.third != null) {
+              console.log('3 if')
               let matchThirdSubcategories = rdos.third.subCategory.filter((subCat) => subCat._id == rdoToFind.subCategory)
               let matchThirdImports = rdos.third.subCategory.filter((imp) => imp == rdoToFind.import)
               let matchThirdRegions = rdos.third.subCategory.filter((region) => region._id == rdoToFind.regionOfInterest)
@@ -182,6 +200,7 @@ exports.insertRdo = async (req, res, next) => {
         }
       }
       if (match) mailingList.push(usr.username)
+      console.log('match:', match)
     }
     for (let recipient in mailingList) {
       nodeMailer.nodeMailerOptions.rdoOfInterestMsg.to = recipient
@@ -192,6 +211,8 @@ exports.insertRdo = async (req, res, next) => {
         console.log('Message sent: %s', info.messageId)
       })
     }
+
+    console.log('Mail da inviare:', mailingList.length)
     res.status(200).json({ rdo })
   } catch (err) {
     if (!err.statusCode) {
