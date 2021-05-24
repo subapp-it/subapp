@@ -323,14 +323,14 @@
       font-size: 1.5rem;
       &.one-year {
         &::after {
-          content: " + IVA / un anno";
+          content: " + IVA = €170,80 / un anno";
           font-weight: normal;
           font-size: 1rem;
         }
       }
       &.two-years {
         &::after {
-          content: " + IVA / due anni";
+          content: " + IVA = €305 / due anni";
           font-weight: normal;
           font-size: 1rem;
         }
