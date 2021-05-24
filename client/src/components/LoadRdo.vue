@@ -653,7 +653,7 @@ export default {
           from: 'info@subapp.it',
           subject: 'Ricezione offerta per RDO: ' + this.rdo.description,
           html: 'Spett.le ' + this.rdo.contractor + ', <br/>' +
-            'l\'operatore economico <strong>' + this.userLogged.companyName + '</strong> ha inviato la seguente offerta: <br/>' +
+            'l\'operatore economico <strong>' + this.userLogged.companyName + '</strong> ha inviato la seguente offerta per la gara in oggetto. <br/>' +
             'Ribasso: <strong>' + this.ribasso + '%</strong><br/>' +
             'Note: ' + this.rdo.peculiarity + '<br/>' + this.rdo.requiredDocuments + '<br/><br/>' +
             (this.fileToShare.length > 0 ? 'Di seguito trova i link ai file relativi all\'azienda: <br/>' : '') +
@@ -668,7 +668,28 @@ export default {
             '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
         }
 
+        const ribassoConfirmationEmail = {
+          to: this.userLogged.username,
+          from: 'info@subapp.it',
+          subject: 'Invio offerta per RDO: ' + this.rdo.description,
+          html: 'Spett.le ' + this.userLogged.companyName + ', <br/>' +
+            'confermiamo l\'invio dell\'offerta per la gara in oggetto all\'operatore economico ' + this.rdo.user.companyName + '<br/>' +
+            'Sarà L\'Appaltatore a ricontattarvi, qualora riterrà la vs. offerta più soddisfacente.' + this.ribasso + '%</strong><br/><br/>' +
+            'Ribasso offerto: ' + this.ribasso + '<br/>' +
+            'Allegati: <br/>' +
+            (this.fileToShare.length > 0 ? 'Di seguito trova i link ai file relativi all\'azienda: <br/>' : '') +
+            (this.fileToShare.includes('certificate') === true ? '<a href="' + certificateUrl.url + '">Certificato o Visura Camerale</a><br/>' : '') +
+            (this.fileToShare.includes('durc') === true ? '<a href="' + durcUrl.url + '">Regolarità Durc</a><br/>' : '') +
+            (this.fileToShare.includes('whiteList') === true ? '<a href="' + whiteListUrl.url + '">Iscrizione White List o Dichiarazione sostitutiva antimafia</a><br/>' : '') +
+            (this.fileToShare.includes('iso') === true ? '<a href="' + isoFileUrl.url + '">ISO</a><br/>' : '') +
+            (this.fileToShare.includes('fgas') === true ? '<a href="' + fgasUrl.url + '">Patentino F-Gas</a><br/>' : '') +
+            (this.fileToShare.includes('presentation') === true ? '<a href="' + presentationUrl.url + '">Presentazione</a><br/>' : '') +
+            (this.fileToShare.includes('soa') === true ? '<a href="' + soaUrl.url + '">SOA</a><br/>' : '') +
+            '<br/>Distinti Saluti,<br/>' +
+            '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
+        }
         await this.sendMail(infoRibassoEmail)
+        await this.sendMail(ribassoConfirmationEmail)
         this.$q.loading.hide()
       }
     },
