@@ -14,7 +14,7 @@ exports.nodeMailerOptions = {
         + 'IBAN: <strong>IT21J0103088600000001704443</strong><br/><br/>'
         + '<strong>ABBONAMENTO ANNUALE</strong><br/>'
         + 'CAUSALE: Abbonamento per n.1 anno al portale<br/>'
-        + 'Importo: <strong>€ 170,00</strong><br/>'
+        + 'Importo: <strong>€ 170,80</strong><br/>'
         + '<br/><br/>'
         + '<strong>ABBONAMENTO BIENNALE</strong><br/>'
         + 'CAUSALE: Abbonamento per n.2 anni al portale<br/>'

@@ -253,7 +253,7 @@
                     color="accent"
                     name="privacyAgreement"
                     v-model="privacyAgreement"/>
-                  <span>Ho preso visione della <a class="hyperlink" >Privacy Policy</a> ed acconsento al trattamento dei dati. *</span>
+                  <span>Ho preso visione della <a class="hyperlink" href="/public/info&privacy.pdf" >Privacy Policy</a> ed acconsento al trattamento dei dati. *</span>
                 </div>
             </div>
             <div class="col-12 row justify-center">
