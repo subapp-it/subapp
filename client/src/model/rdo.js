@@ -6,7 +6,7 @@ export default class rdo {
     this.expirationDate = undefined
     this.user = {}
     this.contractor = undefined
-    this.cmeFile = {}
+    this.cmeFiles = []
     this.images = []
     this.peculiarity = undefined
     this.startDate = undefined

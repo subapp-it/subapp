@@ -29,8 +29,8 @@ const rdoSchema = new Schema({
     type: String,
     required: true
   },
-  cmeFile: {
-    type: Object
+  cmeFiles: {
+    type: Array
   },
   images: {
     type: Array

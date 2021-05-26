@@ -758,7 +758,7 @@
            Al termine, riceverai una mail con le istruzioni da seguire per effettuare il pagamento e completare il processo di registrazione.
           </div>
           <div class="col-12 col-md-9 q-pt-md">
-            Leggi e accetta la <a class="hyperlink"  @click="goToPrivacy">Privacy</a> di Subapp per proseguire con la registrazione. *
+            Leggi e accetta la <a class="hyperlink"  @click="goToPrivacy">Privacy</a> di Subapp per proseguire con la registrazione.
           </div>
           <div class="col-12 col-md-9 q-pt-md">
             Ai sensi dell’art. 6 lett. a) del Regolamento
@@ -770,20 +770,20 @@
             </div>
           </div>
           <div class="col-12 col-md-9 q-pt-md">
-            Ai sensi dell’art. 6 lett. b) del Regolamento *
+            Ai sensi dell’art. 6 lett. b) del Regolamento
           </div>
           <div class="col-12 col-md-9 q-pt-md q-pb-md">
             <div class="q-gutter-sm">
-              <q-radio dense v-model="regulationLetterB" val="true" label="Acconsento" />
+              <q-radio dense v-model="regulationLetterB" val="true" label="Acconsento *" />
               <q-radio dense v-model="regulationLetterB" val="false" label="Non Acconsento" />
             </div>
           </div>
           <div class="col-12 col-md-9 q-pt-md">
-            Leggi e accetta i <a class="hyperlink" @click="goToTeC">Termini e Condizioni</a> di Subapp per proseguire con la registrazione. *
+            Leggi e accetta i <a class="hyperlink" @click="goToTeC">Termini e Condizioni</a> di Subapp per proseguire con la registrazione.
           </div>
           <div class="col-12 col-md-9 q-pt-md q-pb-md">
             <div class="q-gutter-sm">
-              <q-radio dense v-model="termAndCondition" val="true" label="Accetto" />
+              <q-radio dense v-model="termAndCondition" val="true" label="Accetto *" />
               <q-radio dense v-model="termAndCondition" val="false" label="Non Accetto" />
             </div>
           </div>
@@ -1072,7 +1072,7 @@ export default {
       this.durcRegolarityFile = new File([''], 'Durc')
     },
     goToPrivacy () {
-      window.open('/public/info&privacy.pdf')
+      window.open('/public/privacy.pdf', '_blank')
     },
     goToTeC () {
       const routeData = this.$router.resolve({ name: 'termCondition' })

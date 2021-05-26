@@ -241,12 +241,13 @@
       <div class="col-12 col-md-3">
         <q-file
           v-if="!selectedRdo"
-          v-model="cmeFile"
+          v-model="cmeFiles"
           label="Carica quì le informazioni economiche *"
           accept=".pdf"
           outlined
+          multiple
           use-chips
-          :rules="[ (val) => isValid('cmeFile', val, $v) ]"
+          :rules="[ (val) => isValid('cmeFiles', val, $v) ]"
         >
           <template v-slot:prepend>
             <q-icon name="attach_file" />
@@ -257,7 +258,7 @@
               <q-tooltip anchor="top middle" self="bottom middle" content-class="bg-accent" content-style="font-size: 13px" :offset="[10, 10]">
                 Inserire riepiloghi prezzi o computi già scontati del ribasso praticato al Committente, e sui quali sarà formulato il ribasso da parte dei soggetti interessati. <br>
                 Qualora i prezzi facciano riferimento a più tipologie di lavori, forniture e servizi, si riceverà un ribasso medio.
-                <br>Selezionare contemporaneamente uno o più file.
+                <br>Selezionare contemporaneamente uno o più file (puoi caricare immagini in formato ".pdf").
               </q-tooltip>
             </q-icon>
           </template>
@@ -282,7 +283,7 @@
           <template v-slot:append>
             <q-icon class="desktop-only text-secondary" name="info">
               <q-tooltip anchor="top middle" self="bottom middle" content-class="bg-accent" content-style="font-size: 13px" :offset="[10, 10]">
-                Inserisci foto dello stato dei luoghi.<br>Selezionare contemporaneamente uno o più file.
+                Inserisci foto dello stato dei luoghi.<br>Selezionare contemporaneamente uno o più file (puoi caricare immagini in formato ".png, .jpeg, .jpg").
               </q-tooltip>
             </q-icon>
           </template>
@@ -306,7 +307,7 @@
           <template v-slot:append>
             <q-icon class="desktop-only text-secondary" name="info">
               <q-tooltip anchor="top middle" self="bottom middle" content-class="bg-accent" content-style="font-size: 13px" :offset="[10, 10]">
-               Potrai inserire altri file tecnici, utili alla formulazione dell'offerta (es. progetti, relazioni, etc...)<br>Selezionare contemporaneamente uno o più file.
+               Potrai inserire altri file tecnici, utili alla formulazione dell'offerta (es. progetti, relazioni, etc...)<br>Selezionare contemporaneamente uno o più file (puoi caricare immagini in formato ".pdf").
               </q-tooltip>
             </q-icon>
           </template>
@@ -451,7 +452,7 @@ export default {
       country: undefined,
       images: [],
       technicalFiles: [],
-      cmeFile: undefined,
+      cmeFiles: [],
       expirationDate: undefined,
       startDate: undefined,
       endDate: undefined,
@@ -506,12 +507,13 @@ export default {
         }
         this.data.push(obj)
       })
-      if (this.rdo.cmeFile) {
+      this.rdo.cmeFiles.forEach((file, index) => {
+        file.index = index
         const obj = {
-          file: this.rdo.cmeFile
+          file: file
         }
         this.data.push(obj)
-      }
+      })
     },
     async getRegionOptions () {
       await this.getRegions(this.country._id)
@@ -559,9 +561,6 @@ export default {
     },
     async postFilesAndUpdateRdo (rdo) {
       const formData = new FormData()
-      const cmeSlipt = this.cmeFile.name.split('.')
-      const cmeFileType = cmeSlipt[cmeSlipt.length - 1]
-      formData.append('file', this.cmeFile, `cmeFile.${cmeFileType}`)
       this.images.forEach((image) => {
         const imageSlipt = image.name.split('.')
         const imageType = imageSlipt[imageSlipt.length - 1]
@@ -572,9 +571,14 @@ export default {
         const techFileType = techFileSlipt[techFileSlipt.length - 1]
         formData.append('file', techFile, `technicalFiles.${techFileType}`)
       })
+      this.cmeFiles.forEach((cmeFile) => {
+        const cmeFileSlipt = cmeFile.name.split('.')
+        const cmeFileType = cmeFileSlipt[cmeFileSlipt.length - 1]
+        formData.append('file', cmeFile, `cmeFiles.${cmeFileType}`)
+      })
       const uploadedFiles = await this.uploadFile(formData)
       uploadedFiles.files.forEach((file) => {
-        if (file.originalname === 'images' || file.originalname === 'technicalFiles') {
+        if (file.Key.split('.')[1] === 'images' || file.Key.split('.')[1] === 'technicalFiles' || file.Key.split('.')[1] === 'cmeFiles') {
           rdo[file.Key.split('.')[1]].push(file)
         } else {
           rdo[file.Key.split('.')[1]] = file
@@ -840,7 +844,7 @@ export default {
       expirationDate: {
         required
       },
-      cmeFile: {
+      cmeFiles: {
         required: !this.selectedRdo ? required : false
       },
       ribasso: {

@@ -75,11 +75,15 @@
             </div>
           </div>
         </div>
-        <footer>
+        <div class="row text-center flex flex-center" style="width: 100%">
+          <div class="col-12 col-md-9 q-pt-md link-container">
+            Consulta le nostre <a class="hyperlink"  @click="goToCatMerc">categorie merceologiche</a>
+          </div>
+        </div>
+        <footer v-if="!userLogged">
           <q-btn class="full-width q-pa-xs"
                  push
                  :ripple="false"
-                 v-if="!userLogged"
                  @click="openModal('login', 'accedi', false, loginClassObj)"
                  style="background: #29ABF4; color: white" label="Sei gia' registrato? Clicca quì"/>
         </footer>
@@ -144,7 +148,7 @@
       </div>
     </section>
     <q-space></q-space>
-    <section class="fullpage pricing-section" id="id_pricing">
+    <section v-if="!isAuthenticated" class="fullpage pricing-section" id="id_pricing">
       <div class="pricing-section-container" >
         <div class="row">
           <header>
@@ -253,7 +257,7 @@
                     color="accent"
                     name="privacyAgreement"
                     v-model="privacyAgreement"/>
-                  <span>Ho preso visione della <a class="hyperlink" href="/public/info&privacy.pdf" >Privacy Policy</a> ed acconsento al trattamento dei dati. *</span>
+                  <span>Ho preso visione della <a class="hyperlink" href="/public/privacy.pdf" target="_blank" >Privacy Policy</a> ed acconsento al trattamento dei dati. *</span>
                 </div>
             </div>
             <div class="col-12 row justify-center">
@@ -335,7 +339,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userLogged: 'user'
+      userLogged: 'user',
+      isAuthenticated: 'isAuthenticated'
     }),
     heroImage () {
       return {
@@ -354,6 +359,9 @@ export default {
       this.isMaximized = isMaximized
       this.modal = true
       this.classObj = classObj
+    },
+    goToCatMerc () {
+      window.open('/public/categoriemerceologiche.pdf', '_blank')
     },
     async onSendEmail () {
       this.$v.$touch()

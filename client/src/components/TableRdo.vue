@@ -161,6 +161,9 @@ export default {
               if (obj[0] === 'import') {
                 searchObj[obj[0]] = obj[1]
               }
+              if (obj[0] === 'contractor') {
+                searchObj[obj[0]] = obj[1]
+              }
             })
 
             const s1Values = Object.values(searchObj)

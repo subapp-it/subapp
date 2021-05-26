@@ -12,7 +12,9 @@ const removeRdo = async (rdoId, userId) => {
     error.statusCode = 500
     throw error
   }
-  clearFile(rdo.cmeFile.Key)
+  rdo.cmeFiles.forEach((cmeFile) => {
+    clearFile(cmeFile.Key)
+  })
   rdo.images.forEach((image) => {
     clearFile(image.Key)
   })

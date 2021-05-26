@@ -3,9 +3,10 @@
     <q-header class="primary-header q-py-md bg-primary" :style="'border-bottom: 3px solid #165081'">
       <div class="flex justify-between q-mx-lg">
         <router-link to="/">
-          <q-avatar style="border-radius: 0 !important;">
-           <q-icon name="home" color="white" size="lg"></q-icon>
-          </q-avatar>
+           <q-icon color="white" size="lg" style="font-size: 4.4em;">
+             <img style="max-width: 80px;" src="~assets/logo-subapp.png">
+           </q-icon>
+
         </router-link>
           <q-tabs v-if="$route.name !== 'termCondition' && $route.name !== 'cookiePolicy'"
                   dense
@@ -13,7 +14,7 @@
                   shrink
                   :breakpoint="0">
               <q-tab v-if="$route.name==='home'" @click="scrollToElement('id_how_works')" label="Come Funziona" />
-              <q-tab v-if="$route.name==='home'" @click="scrollToElement('id_pricing')" label="Prezzi" />
+              <q-tab v-if="!isAuthenticated" @click="scrollToElement('id_pricing')" label="Prezzi" />
               <q-tab v-if="$route.name==='home'" @click="scrollToElement('contact_us')" label="Contatti" />
               <q-tab v-if="!isAuthenticated" @click="openModal('login', 'accedi', false, loginClassObj, false)" label="Accedi"/>
               <q-tab v-if="!isAuthenticated" @click="openModal('sign-in', 'registrati', true, singInClassObj, false)" label="Registrati"/>
@@ -84,6 +85,9 @@
       <div class="row no-wrap">
         <div class="flex column justify-center col-md-2">
           <q-toolbar>
+            <q-icon color="white" size="lg" style="font-size: 4.4em;">
+              <img style="max-width: 60px;" src="~assets/logo-subapp.png">
+            </q-icon>
             <q-toolbar-title>
               SubApp
             </q-toolbar-title>
@@ -235,7 +239,7 @@ export default {
       window.open(routeData.href, '_blank')
     },
     downloadInfoPrivacy () {
-      window.open('/public/info&privacy.pdf')
+      window.open('/public/privacy.pdf', '_blank')
     }
   },
   watch: {

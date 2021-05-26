@@ -53,7 +53,9 @@ const clearAllFile = async (user) => {
   }
   if(user.loadedRdos.length > 0) {
     for(let rdo of user.loadedRdos) {
-      await clearFile(rdo.cmeFile.Key)
+      for (let cmeFile of rdo.cmeFiles ) {
+        await clearFile(cmeFile.Key)
+      }
       for (let image of  rdo.images ) {
         await clearFile(image.Key)
       }
