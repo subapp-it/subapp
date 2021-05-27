@@ -32,5 +32,7 @@ export default class user {
     this.blocked = false
     this.loadedRdos = []
     this.regulationLetterA = false
+    this.filesExpired = []
+    this.hasFileExpired = false
   }
 }

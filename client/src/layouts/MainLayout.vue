@@ -10,7 +10,8 @@
                   align="justify"
                   shrink
                   :breakpoint="0">
-              <q-tab v-if="$route.name==='home'" @click="scrollToElement('id_how_works')" label="Come Funziona" />
+              <q-tab v-if="$route.name==='home'" @click="scrollToElement('id_how_works')" label="Come Funziona" >
+              </q-tab>
               <q-tab v-if="!isAuthenticated" @click="scrollToElement('id_pricing')" label="Prezzi" />
               <q-tab v-if="$route.name==='home'" @click="scrollToElement('contact_us')" label="Contatti" />
               <q-tab v-if="!isAuthenticated" @click="openModal('login', 'accedi', false, loginClassObj, false)" label="Accedi"/>
@@ -22,7 +23,16 @@
                            content-class="bg-accent"
                            content-style="font-size: 16px"
                            anchor="bottom middle" self="top middle">
-                  Aggiorna il tuo profilo per continuare l'esperienza su Subapp.it
+                  <div v-if="user && user.hasFileExpired && user.filesExpired.length > 0">
+                    Aggiorna il tuo profilo per continuare l'esperienza su Subapp.it <br/>
+                    <div v-for="(fileExpired, index) in user.filesExpired" :key="index">
+                      <div>File scaduto da aggiornare: {{fileExpired}}</div>
+                    </div>
+                  </div>
+                  <div v-if="user && !user.hasFileExpired && user.filesExpired.length == 0">
+                    L'account è stato bloccato perchè non in regola con le linee guida di Subapp.it  <br/>
+                    Utilizza la sezione "contatti" per maggiori informazioni.
+                  </div>
                 </q-tooltip>
               </q-tab>
               <q-tab v-if="isAuthenticated" label="Account">
@@ -81,7 +91,7 @@
       </cookie-law>
       <div class="row no-wrap">
           <q-toolbar>
-            <q-avatar size="76px" font-size="100px">
+            <q-avatar style=" width: 80px ; height: 73px" >
               <img src="~assets/subapp.svg">
             </q-avatar>
           </q-toolbar>

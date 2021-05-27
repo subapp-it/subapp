@@ -133,6 +133,13 @@ const userSchema = new Schema({
   regulationLetterA: {
     type: Boolean,
     default: false
+  },
+  hasFileExpired: {
+    type: Boolean,
+    default: false
+  },
+  filesExpired: {
+    type: Array
   }
 },
 { timestamps: true })
