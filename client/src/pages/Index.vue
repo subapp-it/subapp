@@ -77,7 +77,7 @@
         </div>
         <div class="row text-center flex flex-center" style="width: 100%">
           <div class="col-12 col-md-9 q-pt-md link-container">
-            Consulta le nostre <a class="hyperlink"  @click="goToCatMerc">categorie merceologiche</a>
+            Consulta le nostre <span class="text-uppercase text-info cursor-pointer text-h6 q-mr-sm" style="text-decoration: underline">categorie merceologiche</span>
           </div>
         </div>
         <footer v-if="!userLogged">

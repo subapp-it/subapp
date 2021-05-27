@@ -3,7 +3,7 @@
     <q-header class="primary-header q-py-md bg-primary" :style="'border-bottom: 3px solid #165081'">
       <div class="flex justify-between q-mx-lg">
           <q-avatar style="cursor: pointer; width: 80px ; height: 73px" @click="goToHome()">
-            <img src="~assets/subapp.svg">
+            <img src="~assets/subapp2.svg">
           </q-avatar>
           <q-tabs v-if="$route.name !== 'termCondition' && $route.name !== 'cookiePolicy'"
                   dense
@@ -92,7 +92,7 @@
       <div class="row no-wrap">
           <q-toolbar>
             <q-avatar style=" width: 80px ; height: 73px" >
-              <img src="~assets/subapp.svg">
+              <img src="~assets/subapp2.svg">
             </q-avatar>
           </q-toolbar>
         <div class="flex column justify-center col-md-6">
