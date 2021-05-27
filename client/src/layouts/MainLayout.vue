@@ -2,12 +2,9 @@
   <q-layout view="lHh lpr lff">
     <q-header class="primary-header q-py-md bg-primary" :style="'border-bottom: 3px solid #165081'">
       <div class="flex justify-between q-mx-lg">
-        <router-link to="/">
-           <q-icon color="white" size="lg" style="font-size: 4.4em;">
-             <img style="max-width: 80px;" src="~assets/logo-subapp.png">
-           </q-icon>
-
-        </router-link>
+          <q-avatar style="cursor: pointer" size="73px" @click="goToHome()">
+            <img src="~assets/subapp.svg">
+          </q-avatar>
           <q-tabs v-if="$route.name !== 'termCondition' && $route.name !== 'cookiePolicy'"
                   dense
                   align="justify"
@@ -83,16 +80,11 @@
         </div>
       </cookie-law>
       <div class="row no-wrap">
-        <div class="flex column justify-center col-md-2">
           <q-toolbar>
-            <q-icon color="white" size="lg" style="font-size: 4.4em;">
-              <img style="max-width: 60px;" src="~assets/logo-subapp.png">
-            </q-icon>
-            <q-toolbar-title>
-              SubApp
-            </q-toolbar-title>
+            <q-avatar size="75px">
+              <img src="~assets/subapp.svg">
+            </q-avatar>
           </q-toolbar>
-        </div>
         <div class="flex column justify-center col-md-6">
           <div class="column">
             <div class="info">
@@ -237,6 +229,9 @@ export default {
     goToCookies () {
       const routeData = this.$router.resolve({ name: 'cookiePolicy' })
       window.open(routeData.href, '_blank')
+    },
+    goToHome () {
+      this.$router.push('/')
     },
     downloadInfoPrivacy () {
       window.open('/public/privacy.pdf', '_blank')
