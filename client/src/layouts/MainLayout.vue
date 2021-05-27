@@ -2,7 +2,7 @@
   <q-layout view="lHh lpr lff">
     <q-header class="primary-header q-py-md bg-primary" :style="'border-bottom: 3px solid #165081'">
       <div class="flex justify-between q-mx-lg">
-          <q-avatar style="cursor: pointer" size="73px" @click="goToHome()">
+          <q-avatar style="cursor: pointer; width: 80px ; height: 73px" @click="goToHome()">
             <img src="~assets/subapp.svg">
           </q-avatar>
           <q-tabs v-if="$route.name !== 'termCondition' && $route.name !== 'cookiePolicy'"
@@ -81,7 +81,7 @@
       </cookie-law>
       <div class="row no-wrap">
           <q-toolbar>
-            <q-avatar size="75px">
+            <q-avatar size="76px" font-size="100px">
               <img src="~assets/subapp.svg">
             </q-avatar>
           </q-toolbar>
