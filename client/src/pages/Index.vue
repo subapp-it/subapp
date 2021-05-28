@@ -247,6 +247,7 @@
                        label="Di cosa hai bisogno? *"
                        class="col-12"
                        type="textarea"
+                       maxlength="250"
                        reactive-rules
                        name="emailBody"
                        v-model="emailToSend.emailBody"

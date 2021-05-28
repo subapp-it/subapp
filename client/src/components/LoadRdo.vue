@@ -377,14 +377,18 @@
 
       <div v-if="(selectedRdo != null && rdo.user._id != userLogged._id && !userLogged.admin)"
            class="col-12 col-md-3">
-        <div>Seleziona i documenti con i quali corredare la tua offerta:</div>
+        <div>Seleziona i documenti/contatti con i quali corredare la tua offerta:</div>
         <q-option-group
           :options="getPresentationFiles"
           label="Notifications"
           type="checkbox"
           v-model="fileToShare"
         />
-
+        <q-option-group
+          :options="getContactOptions"
+          type="radio"
+          v-model="contactToShare"
+        />
       </div>
 
       <div v-if="(selectedRdo != null && rdo.user._id != userLogged._id && !userLogged.admin)"
@@ -444,6 +448,8 @@ export default {
   data () {
     return {
       rdo: new Rdo(),
+      options: [],
+      contactToShare: '',
       rdosCategories: null,
       rdosMacrocategories: null,
       rdosSubcategories: null,
@@ -668,10 +674,11 @@ export default {
             (this.fileToShare.includes('fgas') === true ? '<a href="' + fgasUrl.url + '">Patentino F-Gas</a><br/>' : '') +
             (this.fileToShare.includes('presentation') === true ? '<a href="' + presentationUrl.url + '">Presentazione</a><br/>' : '') +
             (this.fileToShare.includes('soa') === true ? '<a href="' + soaUrl.url + '">SOA</a><br/>' : '') +
+            '<strog>Contatto: </strog>' + this.contactToShare +
             '<br/>Distinti Saluti,<br/>' +
             '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
         }
-
+        console.log(infoRibassoEmail.html)
         const ribassoConfirmationEmail = {
           to: this.userLogged.username,
           from: 'info@subapp.it',
@@ -689,6 +696,7 @@ export default {
             (this.fileToShare.includes('fgas') === true ? '<a href="' + fgasUrl.url + '">Patentino F-Gas</a><br/>' : '') +
             (this.fileToShare.includes('presentation') === true ? '<a href="' + presentationUrl.url + '">Presentazione</a><br/>' : '') +
             (this.fileToShare.includes('soa') === true ? '<a href="' + soaUrl.url + '">SOA</a><br/>' : '') +
+            '<strog>Contatto: </strog>' + this.contactToShare +
             '<br/>Distinti Saluti,<br/>' +
             '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
         }
@@ -755,6 +763,16 @@ export default {
       firstSubRdo: 'firstSubRdo',
       countries: 'countries'
     }),
+    getContactOptions () {
+      return [
+        {
+          label: 'Contatto telefonico', value: this.userLogged.telephoneNumber
+        },
+        {
+          label: 'E-mail', value: this.userLogged.username
+        }
+      ]
+    },
     getPresentationFiles () {
       const presentationFiles = []
       if (this.userLogged.certificateFile != null) {
