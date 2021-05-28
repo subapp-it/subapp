@@ -88,7 +88,7 @@ exports.login = (req, res, next) => {
         )
         if (!loadedUser.admin) {
           const today = new Date()
-          today.setHours(0,0,0,0)
+          today.setHours(0, 0, 0, 0)
           loadedUser.hasFileExpired = today > loadedUser.certificateDate || today > loadedUser.durcRegolarityDate
           loadedUser.blocked = today > loadedUser.certificateDate || today > loadedUser.durcRegolarityDate
           if (today > loadedUser.certificateDate) {
