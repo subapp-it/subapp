@@ -16,22 +16,27 @@ const update = (req, res, next, loggedIn) => {
   const { userId } = req.params
   if(req.body) {
     const today =  new Date()
+    today.setHours(0,0,0,0)
     req.body.hasFileExpired = today >  req.body.certificateDate || today >  req.body.durcRegolarityDate
     req.body.blocked = today >  req.body.certificateDate || today >  req.body.durcRegolarityDate
     if(today > req.body.certificateDate) {
       req.body.filesExpired.push('Certificato o Visura Camerale')
     } else {
       if(req.body.filesExpired.length > 0) {
-        const indexToRemove = req.body.filesExpired.indexOf('Certificato o Visura Camerale')
-        req.body.filesExpired.splice(indexToRemove,1)
+        if(req.body.filesExpired.includes('Certificato o Visura Camerale')) {
+          const indexToRemove = req.body.filesExpired.indexOf('Certificato o Visura Camerale')
+          req.body.filesExpired.splice(indexToRemove,1)
+        }
       }
     }
     if(today >req.body.durcRegolarityDate) {
       req.body.filesExpired.push('Regolarità Durc')
     } else {
       if(req.body.filesExpired.length > 0) {
-        const indexToRemove = req.body.filesExpired.indexOf('Regolarità Durc')
-        req.body.filesExpired.splice(indexToRemove,1)
+        if(req.body.filesExpired.includes('Regolarità Durc')) {
+          const indexToRemove = req.body.filesExpired.indexOf('Regolarità Durc')
+          req.body.filesExpired.splice(indexToRemove,1)
+        }
       }
     }
   }
@@ -106,22 +111,29 @@ exports.fetchUser = (req, res, next) => {
       }
       if(!user.admin) {
         const today =  new Date()
+        today.setHours(0,0,0,0)
+        console.log(today)
         user.hasFileExpired = today >  user.certificateDate || today >  user.durcRegolarityDate
         user.blocked = today >  user.certificateDate || today >  user.durcRegolarityDate
         if(today > user.certificateDate) {
           user.filesExpired.push('Certificato o Visura Camerale')
         } else {
           if(user.filesExpired.length > 0) {
-            const indexToRemove = user.filesExpired.indexOf('Certificato o Visura Camerale')
-            user.filesExpired.splice(indexToRemove,1)
+            if(user.filesExpired.includes('Certificato o Visura Camerale')) {
+              const indexToRemove = user.filesExpired.indexOf('Certificato o Visura Camerale')
+              user.filesExpired.splice(indexToRemove,1)
+            }
           }
         }
         if(today >user.durcRegolarityDate) {
           user.filesExpired.push('Regolarità Durc')
         } else {
           if(user.filesExpired.length > 0) {
-            const indexToRemove = user.filesExpired.indexOf('Regolarità Durc')
-            user.filesExpired.splice(indexToRemove,1)
+            if(user.filesExpired.includes('Regolarità Durc')) {
+              const indexToRemove = user.filesExpired.indexOf('Regolarità Durc')
+              user.filesExpired.splice(indexToRemove,1)
+            }
+
           }
         }
       }

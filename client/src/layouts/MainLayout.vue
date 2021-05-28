@@ -57,14 +57,6 @@
                       />
                     </div>
                   </div>
-                  <q-tooltip v-if="user && user.blocked"
-                             transition-show="fade"
-                             transition-hide="fade"
-                             content-class="bg-accent"
-                             content-style="font-size: 16px"
-                             anchor="bottom middle" self="top middle">
-                    Aggiorna il tuo profilo per continuare l'esperienza su Subapp.it
-                  </q-tooltip>
                 </q-menu>
               </q-tab>
           </q-tabs>

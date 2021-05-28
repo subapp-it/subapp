@@ -86,6 +86,28 @@ exports.login = (req, res, next) => {
           config.env.accessTokenSecret,
           { expiresIn: '1h' }
         )
+        if (!loadedUser.admin) {
+          const today = new Date()
+          today.setHours(0,0,0,0)
+          loadedUser.hasFileExpired = today > loadedUser.certificateDate || today > loadedUser.durcRegolarityDate
+          loadedUser.blocked = today > loadedUser.certificateDate || today > loadedUser.durcRegolarityDate
+          if (today > loadedUser.certificateDate) {
+            loadedUser.filesExpired.push('Certificato o Visura Camerale')
+          } else if (loadedUser.filesExpired.length > 0) {
+            if (loadedUser.filesExpired.includes('Certificato o Visura Camerale')) {
+              const indexToRemove = loadedUser.filesExpired.indexOf('Certificato o Visura Camerale')
+              loadedUser.filesExpired.splice(indexToRemove, 1)
+            }
+          }
+          if (today > loadedUser.durcRegolarityDate) {
+            loadedUser.filesExpired.push('Regolarità Durc')
+          } else if (loadedUser.filesExpired.length > 0) {
+            if (loadedUser.filesExpired.includes('Regolarità Durc')) {
+              const indexToRemove = loadedUser.filesExpired.indexOf('Regolarità Durc')
+              loadedUser.filesExpired.splice(indexToRemove, 1)
+            }
+          }
+        }
         res.status(200).json({ token, user: loadedUser, message: 'Login avvenuto con successo!' })
       }
     })
