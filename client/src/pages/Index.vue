@@ -244,7 +244,7 @@
                        v-model="emailToSend.emailFrom"
                        :rules="[ (val) => isValid('emailFrom', val, $v.emailToSend) ]" />
             <q-input   outlined
-                       label="Di cosa hai bisogno? *"
+                       label="Di cosa hai bisogno? * (massimo 250 caratteri)"
                        class="col-12"
                        type="textarea"
                        maxlength="250"
