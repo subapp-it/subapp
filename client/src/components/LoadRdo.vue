@@ -1,5 +1,5 @@
 <template>
-  <q-form @submit="loadRdo">
+  <q-form @submit="openConfirmRdoDialog">
     <div class="row wrap justify-center content-center q-pt-lg no-margin q-gutter-x-md q-gutter-y-xs">
 
       <q-input   outlined
@@ -430,7 +430,7 @@
       </div>
 
     </div>
-
+    <confirm-dialog :message="message" :data-obj="dataObj" :callback="callback" :confirm.sync="confirm"></confirm-dialog>
   </q-form>
 </template>
 
@@ -441,15 +441,21 @@ import { imports, presentationFiles } from 'src/costants/options'
 import { mapActions, mapGetters } from 'vuex'
 import { date } from 'quasar'
 import { required } from 'vuelidate/lib/validators'
+import ConfirmDialog from 'components/ConfirmDialog'
 
 export default {
   name: 'LoadRdo',
+  components: { ConfirmDialog },
   props: ['selectedRdo'],
   data () {
     return {
+      message: undefined,
+      dataObj: undefined,
+      callback: undefined,
+      confirm: false,
       rdo: new Rdo(),
       options: [],
-      contactToShare: '',
+      contactToShare: undefined,
       rdosCategories: null,
       rdosMacrocategories: null,
       rdosSubcategories: null,
@@ -497,6 +503,12 @@ export default {
       'sendMail',
       'fetchFile'
     ]),
+    openConfirmDialog (data, message, callback) {
+      this.callback = callback
+      this.dataObj = data
+      this.message = message
+      this.confirm = true
+    },
     getData () {
       if (this.data.length > 0) this.data = []
       this.rdo.images.forEach((img, index) => {
@@ -541,6 +553,9 @@ export default {
         order: 'first'
       }
       await this.getSubRdo(obj)
+    },
+    openConfirmRdoDialog () {
+      this.openConfirmDialog(null, 'Sei sicuro di voler caricare l\' RDO? Dopo non sarà più possibile modificarla', this.loadRdo)
     },
     async loadRdo () {
       if (!this.$v.$invalid) {
@@ -819,6 +834,7 @@ export default {
     if (!this.selectedRdo) {
       this.rdo.contractor = this.userLogged.companyName
     }
+    this.contactToShare = this.userLogged.telephoneNumber
     this.$v.$touch()
   },
   validations () {
