@@ -46,6 +46,8 @@ exports.nodeMailerOptions = {
 exports.smtpTransport = nodemailer.createTransport({
   host: 'smtps.aruba.it',
   secure: true,
+  debug: true,
+  logger: true,
   port: 465,
   auth: {
     user: config.env.MAIL_FROM,
