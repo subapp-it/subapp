@@ -2,7 +2,7 @@
   "name": "Subapp",
   "version": "0.0.1",
   "description": "Subapp ti permette di cercare ed offrire subappalti su tutto il territorio nazionale",
-  "productName": "Subapp.it",
+  "productName": "www.subapp.it",
   "author": "antoda",
   "private": true,
   "scripts": {
