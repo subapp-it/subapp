@@ -6,6 +6,14 @@
 // Configuration for your app
 // https://quasar.dev/quasar-cli/quasar-conf-js
 /* eslint-env node */
+const SitemapPlugin = require('sitemap-webpack-plugin').default
+const paths = [
+  { path: '/', priority: 0.4 },
+  { path: 'board' },
+  { path: 'cookiePolicy' },
+  { path: '/termCondition' }
+  // add all pages here
+]
 
 module.exports = function (/* ctx */) {
   return {
@@ -78,6 +86,17 @@ module.exports = function (/* ctx */) {
           loader: 'eslint-loader',
           exclude: /node_modules/
         })
+        cfg.plugins.push(
+          new SitemapPlugin({
+            base: 'https://www.subapp.it',
+            options: {
+              filename: 'sitemap.xml',
+              lastmod: true,
+              changefreq: 'monthly'
+            },
+            paths: paths
+          })
+        )
       }
     },
 
