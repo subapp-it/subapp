@@ -23,10 +23,17 @@ exports.nodeMailerOptions = {
         + '<br/>Distinti Saluti,<br/>'
         + '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
   },
+  reminderMsg: {
+    to: 'info@subapp.it', // Change to your recipient,
+    from: config.env.MAIL_FROM, // Change to your verified sender
+    subject: 'SubApp.it: Reimposta password',
+    html: 'Gentile Antonio,<br/><br/>'
+        + 'nuovo utente registrato: '
+  },
   forgottenPasswordMsg: {
     to: '', // Change to your recipient,
     from: config.env.MAIL_FROM, // Change to your verified sender
-    subject: 'SubApp.it: Reimposta password',
+    subject: 'SubApp.it: Nuovo utente registrato!',
     html: 'Gentile cliente,<br/><br/>'
         + 'per completare il reimposta password, acceda al link di seguito riportato<br/>'
   },
@@ -44,7 +51,7 @@ exports.nodeMailerOptions = {
 }
 
 exports.smtpTransport = nodemailer.createTransport({
-  host: 'smtps.aruba.it',
+  host: 'pro.eu.turbo-smtp.com',
   secure: true,
   debug: true,
   logger: true,

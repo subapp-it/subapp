@@ -32,6 +32,13 @@ exports.signup = (req, res, next) => {
         }
         console.log('Message sent: %s', info.messageId)
       })
+      nodeMailer.nodeMailerOptions.reminderMsg.html += user.username
+      await nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.reminderMsg, (error, info) => {
+        if (error) {
+          return console.log(error)
+        }
+        console.log('Message sent: %s', info.messageId)
+      })
       res.status(200).json({ user })
     })
     .catch((err) => {
