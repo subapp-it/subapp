@@ -161,9 +161,9 @@
             </h5>
           </header>
         </div>
-        <div class="row q-col-gutter-sm q-px-xl">
-          <div class="wrapper">
-            <div class="package">
+        <div class="q-px-xl">
+          <div class="flex row-md wrapper">
+            <div class="package" style="margin-bottom: 50px;">
               <div class="name">ANNUALE</div>
               <div class="price one-year">€140</div>
               <div class="trial">Offerta lancio</div>
