@@ -18,7 +18,7 @@ exports.nodeMailerOptions = {
         + '<br/><br/>'
         + '<strong>ABBONAMENTO BIENNALE</strong><br/>'
         + 'CAUSALE: Abbonamento per n.2 anni al portale<br/>'
-        + 'Importo: <strong>€ 123,5 (Quota pari ad euro 175 + I.V.A.)</strong><br/><br/>'
+        + 'Importo: <strong>€ 213,5 (Quota pari ad euro 175 + I.V.A.)</strong><br/><br/>'
         + 'L’accesso al portale e la fattura saranno disponibili dopo la conferma dell\'avvenuta contabilizzazione del bonifico sul conto di <span style="color:#29ABF4">Subapp.it s.r.l.s</span><br/>'
         + '<br/>Distinti Saluti,<br/>'
         + '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
