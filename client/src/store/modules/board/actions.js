@@ -24,6 +24,11 @@ export default {
     commit('SET_BOARD_RDOS', data)
     return data
   },
+  async fetchAllAvailments ({ commit }) {
+    const { data } = await BoardService.get('/availment/all')
+    commit('SET_BOARD_AVAILMENTS', data)
+    return data
+  },
   async fetchFilteredRdos ({ commit }, { queryparams }) {
     const { data } = await BoardService.get('/rdo?' + querystring.stringify(queryparams))
     commit('SET_BOARD_FILTERED_RDOS', data)
@@ -34,9 +39,19 @@ export default {
     commit('SET_RDO', data)
     return data
   },
+  async fetchAvailment ({ commit }, { pathParam }) {
+    const { data } = await BoardService.get('/availment/' + pathParam)
+    commit('SET_AVAILMENT', data)
+    return data
+  },
   async deleteRdo ({ commit }, { pathParam }) {
     const { data } = await BoardService.delete('/rdo/' + pathParam)
     commit('SET_RDO', data)
+    return data
+  },
+  async deleteAvailment ({ commit }, { pathParam }) {
+    const { data } = await BoardService.delete('/availment/' + pathParam)
+    commit('SET_AVAILMENT', data)
     return data
   }
 }

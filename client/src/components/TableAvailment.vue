@@ -4,7 +4,6 @@
     :columns="columns"
     row-key="name"
     bordered
-    :hide-bottom="true"
     :filter="filter"
     :filter-method="customFilter"
     separator="cell"
@@ -42,34 +41,50 @@
           </div>
         </q-td>-->
         <q-td :auto-width="true" key="business" :props="props">
-          {{ props.row }}
+          {{ props.row.availment.business }}
         </q-td>
         <q-td style="white-space: normal" :auto-width="true" key="category" :props="props">
-          {{ props.row }}
+          {{ props.row.availment.category }}
         </q-td>
         <q-td style="white-space: normal" :auto-width="true" key="classification" :props="props">
-          {{ props.row }}
+          {{ props.row.availment.classification }}
         </q-td>
         <q-td :auto-width="true" key="totalAvailment" :props="props">
-          {{ props.row }}
+          <div v-if="props.row.availment.totalAvailment" class="flex column items-center justify-around full-width">
+            <q-icon  class="text-positive cursor-pointer" style="font-size: 1.5rem" name="done"></q-icon>
+          </div>
+          <div v-else>
+            <q-icon  class="text-negative cursor-pointer" style="font-size: 1.5rem" name="close"></q-icon>
+          </div>
         </q-td>
         <q-td :auto-width="true" key="splittedAvailment" :props="props">
-          {{ props.row }}
+          <div v-if="props.row.availment.splittedAvailment" class="flex column items-center justify-around full-width">
+            <q-icon  class="text-positive cursor-pointer" style="font-size: 1.5rem" name="done"></q-icon>
+          </div>
+          <div v-else>
+            <q-icon  class="text-negative cursor-pointer" style="font-size: 1.5rem" name="close"></q-icon>
+          </div>
         </q-td>
         <q-td :auto-width="true" key="rti" :props="props">
-          {{ props.row }}
+          <div v-if="props.row.availment.rti" class="flex column items-center justify-around full-width">
+            <q-icon  class="text-positive cursor-pointer" style="font-size: 1.5rem" name="done"></q-icon>
+          </div>
+          <div v-else>
+            <q-icon  class="text-negative cursor-pointer" style="font-size: 1.5rem" name="close"></q-icon>
+          </div>
         </q-td>
         <q-td :auto-width="true" key="participationFee" :props="props">
-          {{ props.row }}
+          {{ props.row.availment.participationFee }}
         </q-td>
         <q-td :auto-width="true" key="percentage" :props="props">
-          {{ props.row }}
+          {{ props.row.availment.percentage }}
         </q-td>
         <q-td :auto-width="true" key="contact" :props="props">
-          {{ props.row }}
+          {{ props.row.availment.contact }}
         </q-td>
-        <q-td :auto-width="true" key="soa" :props="props">
-          {{ props.row }}
+        <q-td :auto-width="true" key="soaFile" :props="props">
+          <q-icon v-if="props.row.availment.soaFile" class="text-accent cursor-pointer" name="file_download" style="font-size: 2rem" @click="downloadFile(props.row.user.availment.Key)"></q-icon>
+          <q-icon class="text-negative" v-else name="remove"></q-icon>
         </q-td>
         <q-td :auto-width="true" key="viewRdo" :props="props">
           <q-icon style="font-size: 2rem;" name="search" @click="openAvailment(props.row.rdo)" class="text-accent cursor-pointer"></q-icon>
@@ -83,7 +98,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'TableAvailment',
@@ -91,7 +106,7 @@ export default {
   data () {
     return {
       pagination: {
-        rowsPerPage: 0
+        rowsPerPage: 10
       },
       search: '',
       columns: [
@@ -104,7 +119,7 @@ export default {
         { name: 'participationFee', required: true, label: 'Quota partec.', align: 'center' },
         { name: 'percentage', required: true, label: 'Percentuale', align: 'center' },
         { name: 'contact', required: true, label: 'Contatto', align: 'center' },
-        { name: 'soa', required: true, label: 'SOA', align: 'center' }
+        { name: 'soaFile', required: true, label: 'SOA', align: 'center' }
       ],
       data: []
     }
@@ -120,6 +135,27 @@ export default {
     }
   },
   methods: {
+    ...mapActions([
+      'fetchFile'
+    ]),
+    async downloadFile (key) {
+      const obj = {
+        pathParam: key
+      }
+      const data = await this.fetchFile(obj)
+      window.open(data.url)
+    },
+    getData (data) {
+      if (this.data && this.data.length > 0) {
+        this.data = []
+      }
+      data.forEach((availment) => {
+        const obj = {
+          availment: availment
+        }
+        this.data.push(obj)
+      })
+    },
     loadAvailment () {
       // this.$emit('resetSelectedRdo')
       this.$emit('openModal')
@@ -172,6 +208,11 @@ export default {
         })
 
       return filteredRows
+    }
+  },
+  mounted () {
+    if (!this.allAvailments) {
+      this.getData(this.userLogged.loadedAvailments)
     }
   }
 }

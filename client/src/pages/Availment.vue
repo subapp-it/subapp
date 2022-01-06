@@ -11,8 +11,8 @@
         narrow-indicator
         align="center"
       >
-        <q-tab :ripple="false" name="availments" label="Cerca Avvalimento" class="q-mr-lg"/>
-        <q-tab :ripple="false" name="availmentOfferedByYou" label="Avvalimento da te offerti" class="q-ml-lg" />
+        <q-tab :ripple="false" name="availments" label="Cerca Avvalimenti" class="q-mr-lg"/>
+        <q-tab :ripple="false" name="availmentOfferedByYou" label="Avvalimenti da te offerti" class="q-ml-lg" />
       </q-tabs>
 
       <h5 v-if="userLogged.admin" class="text-center no-margin">Lista RDO vista ADMIN</h5>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import UserAvailment from 'components/UserAvailment'
 
 export default {
@@ -46,14 +46,39 @@ export default {
   components: { UserAvailment },
   data () {
     return {
-      allLoaded: true,
+      allLoaded: false,
       tab: 'availments'
+    }
+  },
+  methods: {
+    ...mapActions([
+      'fetchAllAvailments',
+      'fetchUser'
+    ]),
+    async loadAvailments () {
+      this.$q.loading.show()
+      if (this.userLogged) {
+        await this.fetchAllAvailments()
+        this.allLoaded = true
+      }
+      this.$q.loading.hide()
     }
   },
   computed: {
     ...mapGetters({
       userLogged: 'user'
     })
+  },
+  async mounted () {
+    this.$q.loading.show()
+    if (!this.userLogged) {
+      const userId = window.localStorage.getItem('userId')
+      if (userId) {
+        const obj = { pathParam: userId }
+        await this.fetchUser(obj)
+      }
+    }
+    await this.loadAvailments()
   }
 }
 </script>

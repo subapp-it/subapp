@@ -40,6 +40,33 @@ const removeRdo = async (rdoId, userId) => {
   await user.save()
 }
 
+const removeAvailment = async (availmentId, userId) => {
+  let indexToRemove
+  const availment = await Rdo.findById(availmentId)
+  if (!availment) {
+    const error = new Error('Availment non trovato')
+    error.statusCode = 500
+    throw error
+  }
+  await clearFile(availment.soaFile.Key)
+  await Availment.findByIdAndRemove(availmentId)
+  const user = await User.findById(userId)
+  if (!user) {
+    const error = new Error('Sessione scaduta')
+    error.statusCode = 401
+    throw error
+  }
+  user.loadedAvailments.forEach((loadedAvailment, index) => {
+    if (loadedAvailment._id.toString() === availmentId.toString()) {
+      indexToRemove = index
+    }
+  })
+  if (indexToRemove != null) {
+    user.loadedAvailments.splice(indexToRemove, 1)
+  }
+  await user.save()
+}
+
 const deleteExpiredRDO = async (next) => {
   try {
     const rdos = await Rdo.find({ expirationDate: { $lt: new Date() } })
@@ -124,6 +151,21 @@ exports.findAllRdos = async (req, res, next) => {
     })
 }
 
+exports.findAllAvailments = async (req, res, next) => {
+  Availment.find().sort('createdAt')
+      .then((availments) => {
+        res.status(200).json({
+          availments
+        })
+      })
+      .catch((err) => {
+        if (!err.statusCode) {
+          err.statusCode = 500
+        }
+        next(err)
+      })
+}
+
 exports.findOneRdo = (req, res, next) => {
   const { rdoId } = req.params
   Rdo.findById(rdoId)
@@ -138,6 +180,22 @@ exports.findOneRdo = (req, res, next) => {
       }
       next(err)
     })
+}
+
+exports.findOneAvailment = (req, res, next) => {
+  const { availmentId } = req.params
+  Availment.findById(availmentId)
+      .then((availment) => {
+        res.status(200).json({
+          availment
+        })
+      })
+      .catch((err) => {
+        if (!err.statusCode) {
+          err.statusCode = 500
+        }
+        next(err)
+      })
 }
 
 exports.insertRdo = async (req, res, next) => {
@@ -316,6 +374,20 @@ exports.deleteRdo = async (req, res, next) => {
   try {
     await removeRdo(rdoId, userId)
     res.status(200).json({ message: 'Rdo eliminata con successo!' })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+exports.deleteAvailment = async (req, res, next) => {
+  const { availmentId } = req.params
+  const { userId } = req.params
+  try {
+    await removeAvailment(availmentId, userId)
+    res.status(200).json({ message: 'Avvalimento eliminato con successo!' })
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500

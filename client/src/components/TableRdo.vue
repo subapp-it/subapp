@@ -4,7 +4,6 @@
     :columns="columns"
     row-key="name"
     bordered
-    :hide-bottom="true"
     :filter="filter"
     :filter-method="customFilter"
     separator="cell"
@@ -80,7 +79,7 @@ export default {
   data () {
     return {
       pagination: {
-        rowsPerPage: 0
+        rowsPerPage: 10
       },
       search: '',
       columns: [
