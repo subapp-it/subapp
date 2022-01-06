@@ -130,6 +130,9 @@ const userSchema = new Schema({
   loadedRdos: {
     type: Array
   },
+  loadedAvailments: {
+    type: Array
+  },
   regulationLetterA: {
     type: Boolean,
     default: false

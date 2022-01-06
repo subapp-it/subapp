@@ -31,6 +31,7 @@ export default class user {
     this.subscriptionDate = null
     this.blocked = false
     this.loadedRdos = []
+    this.loadedAvailments = []
     this.regulationLetterA = false
     this.filesExpired = []
     this.hasFileExpired = false

@@ -8,6 +8,19 @@ const legalFormOptions = [
   'Società cooperative'
 ]
 
+const classifications = [
+  'I',
+  'II',
+  'III',
+  'III BIS',
+  'IV',
+  'IV BIS',
+  'V',
+  'VI',
+  'VII',
+  'VIII'
+]
+
 const imports = [
   'fino a 50.000€',
   'da 50.000€ a 150.000€',
@@ -55,3 +68,4 @@ exports.imports = imports
 exports.compCatOptions = compCatOptions
 exports.presentationFiles = presentationFiles
 exports.nodemailer = nodemailer
+exports.classifications = classifications

@@ -8,5 +8,7 @@ route.get('/rdo/:rdoId', isAuth, boardController.findOneRdo)
 route.post('/rdo/:userId', isAuth, boardController.insertRdo)
 route.put('/rdo/:rdoId/:userId', isAuth, boardController.updateRdo)
 route.delete('/rdo/:rdoId/:userId', isAuth, boardController.deleteRdo)
+route.post('/availment/:userId', isAuth, boardController.insertAvailment)
+route.put('/availment/:availmentId/:userId', isAuth, boardController.updateAvailment)
 
 module.exports = route

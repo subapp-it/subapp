@@ -9,7 +9,7 @@ export default class availment {
     this.classification = null
     this.participationFee = null
     this.awardFee = null
-    this.contact = null
+    this.contact = ''
     this.soaFile = {}
   }
 }

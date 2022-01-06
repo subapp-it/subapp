@@ -15,8 +15,8 @@
         <q-card-section :class="classObj">
           <login @loginSuccess="loginSuccess" v-if="component === 'login'" />
           <sign-in :is-admin="isAdmin" :selectedUser="selectedUser" :is-editing="isEditing" @editSelectedUserSuccess="editSelectedUserSuccess" @signupSuccess="signupSuccess" @editSuccess="editSuccess" v-if="component === 'sign-in'" ></sign-in>
-          <load-rdo :selected-rdo="selectedRdo" @loadRdoSuccess="signupSuccess"  v-if="component==='load-rdo'"></load-rdo>
-          <load-availment v-if="component==='load-availment'"></load-availment>
+          <load-rdo :selected-rdo="selectedRdo" @loadRdoSuccess="loadRdoSuccess"  v-if="component==='load-rdo'"></load-rdo>
+          <load-availment v-if="component==='load-availment'" @loadAvailmentSuccess="loadAvailmentSuccess"></load-availment>
         </q-card-section>
       </q-card>
   </q-dialog>
@@ -50,6 +50,9 @@ export default {
       this.$emit('signupSuccess')
     },
     loadRdoSuccess (value) {
+      this.$emit('update:modal', value)
+    },
+    loadAvailmentSuccess (value) {
       this.$emit('update:modal', value)
     },
     editSuccess (value) {

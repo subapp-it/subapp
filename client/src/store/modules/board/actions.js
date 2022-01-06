@@ -7,8 +7,16 @@ export default {
     const { data } = await BoardService.post('/rdo/' + pathParam, body)
     return data
   },
+  async createAvailment ({ commit }, { pathParam, body }) {
+    const { data } = await BoardService.post('/availment/' + pathParam, body)
+    return data
+  },
   async updateRdo ({ commit }, { pathParam, body }) {
     const { data } = await BoardService.put('/rdo/' + pathParam, body)
+    return data
+  },
+  async updateAvailment ({ commit }, { pathParam, body }) {
+    const { data } = await BoardService.put('/availment/' + pathParam, body)
     return data
   },
   async fetchAllRdos ({ commit }) {

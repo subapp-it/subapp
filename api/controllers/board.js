@@ -1,5 +1,6 @@
 /* eslint-disable eqeqeq,no-underscore-dangle,prefer-const,no-restricted-syntax,no-await-in-loop,no-unused-expressions,no-sequences,max-len,no-param-reassign,no-lonely-if,guard-for-in */
 const Rdo = require('../../models/rdo')
+const Availment = require('../../models/availment')
 const User = require('../../models/user')
 const { clearFile } = require('../../utils/utils')
 const nodeMailer = require('../../utils/nodeMailer')
@@ -207,6 +208,24 @@ exports.insertRdo = async (req, res, next) => {
   }
 }
 
+exports.insertAvailment = async (req, res, next) => {
+  try {
+    const { body } = req
+    const { userId } = req.params
+    const availment = new Availment(body)
+    const availmentUpdated = await availment.save()
+    const user = await User.findById(userId)
+    user.loadedAvailments.push(availmentUpdated)
+    await user.save()
+    res.status(200).json({ availment })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
 exports.updateRdo = (req, res, next) => {
   const { rdoId } = req.params
   const { userId } = req.params
@@ -247,6 +266,48 @@ exports.updateRdo = (req, res, next) => {
       }
       next(err)
     })
+}
+
+exports.updateAvailment = (req, res, next) => {
+  const { availmentId } = req.params
+  const { userId } = req.params
+  let findedAvailment
+  let indexToUpdate
+  Availment.findByIdAndUpdate(availmentId, req.body, {
+    overwrite: false,
+    new: true
+  })
+      .then((availment) => {
+        findedAvailment = availment
+        return User.findById(userId)
+      })
+      .then((user) => {
+        if (!user) {
+          const error = new Error('Sessione scaduta')
+          error.statusCode = 401
+          throw error
+        }
+        user.loadedAvailments.forEach((loadedAvailment, index) => {
+          if (loadedAvailment._id.toString() === availmentId.toString()) {
+            indexToUpdate = index
+          }
+        })
+        if (indexToUpdate != null) {
+          user.loadedAvailments.splice(indexToUpdate, 1)
+          user.loadedAvailments.push(findedAvailment)
+        }
+
+        return user.save()
+      })
+      .then(() => {
+        res.status(200).json({})
+      })
+      .catch((err) => {
+        if (!err.statusCode) {
+          err.statusCode = 500
+        }
+        next(err)
+      })
 }
 
 exports.deleteRdo = async (req, res, next) => {
