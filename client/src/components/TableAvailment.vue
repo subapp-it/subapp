@@ -83,7 +83,7 @@
           {{ props.row.availment.contact }}
         </q-td>
         <q-td :auto-width="true" key="soaFile" :props="props">
-          <q-icon v-if="props.row.availment.soaFile" class="text-accent cursor-pointer" name="file_download" style="font-size: 2rem" @click="downloadFile(props.row.user.availment.Key)"></q-icon>
+          <q-icon v-if="props.row.availment.soaFile" class="text-accent cursor-pointer" name="file_download" style="font-size: 2rem" @click="downloadFile(props.row.availment.soaFile.Key)"></q-icon>
           <q-icon class="text-negative" v-else name="remove"></q-icon>
         </q-td>
         <q-td :auto-width="true" key="viewRdo" :props="props">
