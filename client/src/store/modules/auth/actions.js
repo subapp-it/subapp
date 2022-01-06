@@ -26,6 +26,10 @@ export default {
     const { data } = await AuthService.signup(user)
     return data
   },
+  async signupPaymentSuccess ({ commit }, body) {
+    const { data } = await AuthService.signupPaymentSuccess(body)
+    return data
+  },
   async forgottenPassword ({ commit }, { queryparams }) {
     const { data } = await AuthService.forgottenPassword('/forgottenPassword?' + querystring.stringify(queryparams))
     return data

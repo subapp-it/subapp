@@ -9,6 +9,9 @@ export default {
   signup (user) {
     return ApiService.put(resource + '/signup', user)
   },
+  signupPaymentSuccess (body) {
+    return ApiService.put(resource + '/signupPaymentSuccess', body)
+  },
   forgottenPassword (path) {
     return ApiService.get(resource + path)
   },

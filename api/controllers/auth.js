@@ -25,20 +25,6 @@ exports.signup = (req, res, next) => {
     .then(async (user) => {
       user.payed = undefined
       user.admin = undefined
-      nodeMailer.nodeMailerOptions.msgSignup.to = user.username
-      await nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.msgSignup, (error, info) => {
-        if (error) {
-          return console.log(error)
-        }
-        console.log('Message sent: %s', info.messageId)
-      })
-      nodeMailer.nodeMailerOptions.reminderMsg.html += user.username
-      await nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.reminderMsg, (error, info) => {
-        if (error) {
-          return console.log(error)
-        }
-        console.log('Message sent: %s', info.messageId)
-      })
       res.status(200).json({ user })
     })
     .catch((err) => {
@@ -47,6 +33,32 @@ exports.signup = (req, res, next) => {
       }
       next(err)
     })
+}
+
+exports.signupPaymentSuccess = async (req, res, next) => {
+  const { body } = req
+  try {
+    nodeMailer.nodeMailerOptions.msgSignup.to = body.username
+    await nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.msgSignup, (error, info) => {
+      if (error) {
+        return console.log(error)
+      }
+      console.log('Message sent: %s', info.messageId)
+    })
+    nodeMailer.nodeMailerOptions.reminderMsg.html += body.username
+    await nodeMailer.smtpTransport.sendMail(nodeMailer.nodeMailerOptions.reminderMsg, (error, info) => {
+      if (error) {
+        return console.log(error)
+      }
+      console.log('Message sent: %s', info.messageId)
+    })
+    res.status(200).json({})
+  } catch (error) {
+    if (!error.statusCode) {
+      error.statusCode = 500
+    }
+    next(error)
+  }
 }
 
 exports.login = (req, res, next) => {

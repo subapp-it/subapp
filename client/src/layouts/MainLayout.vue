@@ -144,7 +144,7 @@
 <script>
 import { scroll } from 'quasar'
 import Modal from 'components/Modal'
-import { mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import CookieLaw from 'vue-cookie-law'
@@ -179,6 +179,9 @@ export default {
     ])
   },
   methods: {
+    ...mapActions([
+      'signupPaymentSuccess'
+    ]),
     scrollToElement (id) {
       const el = document.getElementById(id)
       const target = getScrollTarget(el)
@@ -246,8 +249,9 @@ export default {
       window.open('/public/privacy.pdf', '_blank')
     }
   },
-  mounted () {
-    if (this.$route.query.paymentSuccess) {
+  async mounted () {
+    if (this.$route.query.paymentSuccess && this.$route.query.username) {
+      await this.signupPaymentSuccess({ username: this.$route.query.username })
       setTimeout(() => {
         this.$q.notify({
           type: 'positive',

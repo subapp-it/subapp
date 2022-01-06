@@ -39,5 +39,6 @@ route.post('/login',
 
 route.get('/forgottenPassword', authController.forgottenPassword)
 route.post('/resetPassword', authController.resetPassword)
+route.put('/signupPaymentSuccess', authController.signupPaymentSuccess)
 
 module.exports = route

@@ -855,7 +855,7 @@ export default {
         }
       ],
       loading: false,
-      successURL: window.location.origin + '?paymentSuccess=true',
+      successURL: window.location.origin + '?paymentSuccess=true&username=' + this.user.username,
       cancelURL: 'https://www.google.it',
       user: new User(),
       // legalFormOptions: legalFormOptions,
