@@ -5,6 +5,7 @@ const userRoute = require('./routes/user')
 const optionRoute = require('./routes/option')
 const emailRoute = require('./routes/email')
 const boardRoute = require('./routes/board')
+const availmentRoute = require('./routes/availment')
 
 module.exports = () => {
   app.use('/auth', authRoute)
@@ -13,6 +14,7 @@ module.exports = () => {
   app.use('/option', optionRoute)
   app.use('/email', emailRoute)
   app.use('/board', boardRoute)
+  app.use('/availment', availmentRoute)
 
   /// catch 404 and forward to error handler
   app.use((req, res, next) => {

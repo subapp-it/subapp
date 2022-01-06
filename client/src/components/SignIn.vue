@@ -1,5 +1,17 @@
 <template>
-  <q-form @submit="onSignup">
+  <q-form @submit="onSignIn">
+    <div>
+      <stripe-checkout
+        ref="checkoutRef"
+        mode="payment"
+        :pk="config.STRIPE_PUBLISHABLE_KEY"
+        :line-items="lineItems"
+        :success-url="successURL"
+        :cancel-url="cancelURL"
+        :customer-email="this.user.username"
+        @loading="v => loading = v"
+      />
+    </div>
     <q-stepper
       v-model="step"
       ref="stepper"
@@ -826,12 +838,25 @@ import { imports, compCatOptions } from '../costants/options'
 import { mapActions, mapGetters } from 'vuex'
 import validator from '../validations/validator'
 import User from '../model/user'
+import { StripeCheckout } from '@vue-stripe/vue-stripe'
+import config from '../../config'
 import { date } from 'quasar'
 
 export default {
   name: 'SignIn',
+  components: { StripeCheckout },
   data () {
     return {
+      config: config,
+      lineItems: [
+        {
+          price: config.STRIPE_PRICE_ID,
+          quantity: 1
+        }
+      ],
+      loading: false,
+      successURL: window.location.origin + '?paymentSuccess=true',
+      cancelURL: 'https://www.google.it',
       user: new User(),
       // legalFormOptions: legalFormOptions,
       imports: imports,
@@ -1101,7 +1126,7 @@ export default {
       }
       return date
     },
-    async onSignup () {
+    async onSignIn () {
       const tempCertificateDate = this.user.certificateDate
       const tempDurcRegolarityDate = this.user.durcRegolarityDate
       if ((!this.$v.$invalid && this.step === 3) || (!this.$v.$invalid && this.step === 2 && this.isEditing)) {
@@ -1145,7 +1170,8 @@ export default {
           this.user.durcRegolarityDate = tempDurcRegolarityDate
           this.$q.loading.hide()
           if (!this.isEditing) {
-            this.$emit('signupSuccess', false)
+            // this.$emit('signupSuccess', false)
+            this.$refs.checkoutRef.redirectToCheckout()
           }
         } catch (error) {
           this.user.certificateDate = tempCertificateDate

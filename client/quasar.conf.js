@@ -61,6 +61,7 @@ module.exports = function (/* ctx */) {
     build: {
       vueRouterMode: 'history', // available values: 'hash', 'history'
       distDir: '../dist/spa',
+      env: require('dotenv').config().parsed,
 
       // transpile: false,
 

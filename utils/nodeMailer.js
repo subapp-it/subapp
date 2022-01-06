@@ -5,28 +5,16 @@ exports.nodeMailerOptions = {
   msgSignup: {
     to: '',
     from: config.env.MAIL_FROM,
-    subject: 'SubApp.it: Pagamento con Bonifico Bancario',
+    subject: 'SubApp.it: Pagamento avvenuto con successo!',
     html: 'Gentile cliente,<br/><br/>'
-        + 'per completare l\'acquisto da lei richiesto, esegua un bonifico bancario alle coordinate di seguito riportate.<br/>'
-        + 'Coordinate bancarie:<br/>'
-        + 'Intestato: <strong>SUBAPP.IT S.R.L.S.</strong><br/>'
-        + 'BANCA MONTE DEI PASCHI DI SIENA<br/>'
-        + 'IBAN: <strong>IT21J0103088600000001704443</strong><br/><br/>'
-        + '<strong>ABBONAMENTO ANNUALE</strong><br/>'
-        + 'CAUSALE: Abbonamento per n.1 anno al portale<br/>'
-        + 'Importo: <strong>€ 119,56 (Quota pari ad euro 98 + I.V.A.)</strong><br/>'
-        + '<br/><br/>'
-        + '<strong>ABBONAMENTO BIENNALE</strong><br/>'
-        + 'CAUSALE: Abbonamento per n.2 anni al portale<br/>'
-        + 'Importo: <strong>€ 213,5 (Quota pari ad euro 175 + I.V.A.)</strong><br/><br/>'
-        + 'L’accesso al portale e la fattura saranno disponibili dopo la conferma dell\'avvenuta contabilizzazione del bonifico sul conto di <span style="color:#29ABF4">Subapp.it s.r.l.s</span><br/>'
+        + 'Pagamento avvenuto con successo! Entro 24h il tuo account sarà attivo<br/>'
         + '<br/>Distinti Saluti,<br/>'
-        + '<span style="color:#29ABF4">Subapp.it s.r.l.s</span>'
+        + '<span style="color:#29ABF4">Subapp.it</span>'
   },
   reminderMsg: {
     to: 'info@subapp.it', // Change to your recipient,
     from: config.env.MAIL_FROM, // Change to your verified sender
-    subject: 'SubApp.it: Reimposta password',
+    subject: 'SubApp.it: Nuovo utente registrato',
     html: 'Gentile Antonio,<br/><br/>'
         + 'nuovo utente registrato: '
   },

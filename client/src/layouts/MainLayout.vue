@@ -16,7 +16,7 @@
               <q-tab v-if="$route.name==='home'" @click="scrollToElement('contact_us')" label="Contatti" />
               <q-tab v-if="!isAuthenticated" @click="openModal('login', 'accedi', false, loginClassObj, false)" label="Accedi"/>
               <q-tab v-if="!isAuthenticated" @click="openModal('sign-in', 'registrati', true, singInClassObj, false)" label="Registrati"/>
-              <q-tab v-if="isAuthenticated && user && $route.name!= 'board'" :disable="user && user.blocked" @click="openBoard"  label="Bacheca">
+              <q-tab v-if="isAuthenticated && user && $route.name!= 'board' && $route.name != 'availment'" :disable="user && user.blocked" @click="openBoard"  label="Bacheca">
                 <q-tooltip v-if="user && user.blocked"
                            transition-show="fade"
                            transition-hide="fade"
@@ -35,6 +35,8 @@
                   </div>
                 </q-tooltip>
               </q-tab>
+              <q-tab v-if="isAuthenticated && user && ($route.name == 'board' || $route.name == 'availment')" :disable="user && user.blocked" @click="openBoard"  label="Richieste di offerta" />
+              <q-tab v-if="isAuthenticated && user && ($route.name == 'board' || $route.name == 'availment')" :disable="user && user.blocked" @click="openAvailment"  label="Avvalimenti SOA" />
               <q-tab v-if="isAuthenticated" label="Account">
                 <q-menu transition-show="jump-down" transition-hide="jump-up">
                   <div class="row no-wrap q-pa-sm">
@@ -181,7 +183,7 @@ export default {
       const el = document.getElementById(id)
       const target = getScrollTarget(el)
       const offset = el.offsetTop + 3
-      const duration = 900
+      const duration = 400
       setScrollPosition(target, offset, duration)
     },
     openModal (component, title, isMaximized, classObj, isEditing) {
@@ -196,13 +198,13 @@ export default {
       this.openModal('sign-in', 'Modifica Profilo', true, this.singInClassObj, true)
     },
     signupSuccess () {
-      setTimeout(() => {
-        this.$q.notify({
-          type: 'positive',
-          message: 'Ci siamo quasi! Controlla la mail per scoprire i prossimi passi da seguire per completare la registrazione.'
-        })
-        this.openModal('login', 'accedi', false, this.loginClassObj, false)
-      }, 1000)
+      // setTimeout(() => {
+      //   this.$q.notify({
+      //     type: 'positive',
+      //     message: 'Ci siamo quasi! Controlla la mail per scoprire i prossimi passi da seguire per completare la registrazione.'
+      //   })
+      //   this.openModal('login', 'accedi', false, this.loginClassObj, false)
+      // }, 1000)
     },
     logout () {
       this.$q.loading.show()
@@ -225,6 +227,11 @@ export default {
         this.$router.push('/board')
       }
     },
+    openAvailment () {
+      if (this.$route.name !== 'availment') {
+        this.$router.push('/availment')
+      }
+    },
     refreshAos () {
       this.aosNeedRefresh = true
     },
@@ -237,6 +244,16 @@ export default {
     },
     downloadInfoPrivacy () {
       window.open('/public/privacy.pdf', '_blank')
+    }
+  },
+  mounted () {
+    if (this.$route.query.paymentSuccess) {
+      setTimeout(() => {
+        this.$q.notify({
+          type: 'positive',
+          message: 'Ci siamo quasi! Entro 24h il tuo account sarà attivo. Controlla la tua casella postale'
+        })
+      }, 1000)
     }
   },
   watch: {
