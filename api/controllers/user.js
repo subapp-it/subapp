@@ -2,6 +2,7 @@
 const User = require('../../models/user')
 const { clearFile } = require('../../utils/utils')
 const Rdo = require('../../models/rdo')
+const Availment = require('../../models/availment')
 const AWS = require('aws-sdk')
 const config = require('../../config')
 
@@ -162,6 +163,7 @@ exports.fetchUsers = (req, res, next) => {
 
 exports.deleteUser = (req, res, next) => {
   const { userId } = req.params
+  let userFound = undefined
   User.findById(userId)
     .then((user) => {
       if (!user) {
@@ -169,7 +171,7 @@ exports.deleteUser = (req, res, next) => {
         error.statusCode = 404
         throw error
       }
-
+      userFound = user
       clearAllFile(user)
 
       const idList = user.loadedRdos.map((rdo) => rdo._id)
@@ -177,6 +179,12 @@ exports.deleteUser = (req, res, next) => {
         '_id': {$in: idList}
       })
 
+    })
+    .then(() => {
+      const idList = userFound.loadedAvailments.map((availment) => availment._id)
+      return Availment.deleteMany({
+        '_id': {$in: idList}
+      })
     })
     .then(() => {
         return User.findByIdAndRemove(userId)
