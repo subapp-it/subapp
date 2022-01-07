@@ -1,9 +1,9 @@
 <template>
   <q-page v-if="userLogged">
     <div class="q-pa-lg">
-      <table-availment @openModal="openModal('load-availment', 'Offri Avvalimento', true, loadAvailmentClassObj, false)"></table-availment>
+      <table-availment @resetSelectedAvailment="selectedAvailment= null" @openSelectedAvailment="openSelectedAvailment" @openModal="openModal('load-availment', 'Offri Avvalimento', true, loadAvailmentClassObj, false)"></table-availment>
     </div>
-    <modal :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle"/>
+    <modal :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle" :selected-availment="selectedAvailment"/>
   </q-page>
 </template>
 
@@ -24,7 +24,7 @@ export default {
       modalTitle: undefined,
       isMaximized: false,
       modal: false,
-      selectedRdo: null,
+      selectedAvailment: null,
       classObj: {}
     }
   },
@@ -34,6 +34,10 @@ export default {
     })
   },
   methods: {
+    openSelectedAvailment (availment) {
+      this.selectedAvailment = availment
+      this.openModal('load-availment', 'Avvalimento di ' + availment.business, true, this.loadAvailmentClassObj, false)
+    },
     openModal (component, title, isMaximized, classObj) {
       this.modalComponent = component
       this.modalTitle = title

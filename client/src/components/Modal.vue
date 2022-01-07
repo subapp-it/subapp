@@ -16,7 +16,7 @@
           <login @loginSuccess="loginSuccess" v-if="component === 'login'" />
           <sign-in :is-admin="isAdmin" :selectedUser="selectedUser" :is-editing="isEditing" @editSelectedUserSuccess="editSelectedUserSuccess" @signupSuccess="signupSuccess" @editSuccess="editSuccess" v-if="component === 'sign-in'" ></sign-in>
           <load-rdo :selected-rdo="selectedRdo" @loadRdoSuccess="loadRdoSuccess"  v-if="component==='load-rdo'"></load-rdo>
-          <load-availment v-if="component==='load-availment'" @loadAvailmentSuccess="loadAvailmentSuccess"></load-availment>
+          <load-availment v-if="component==='load-availment'" @loadAvailmentSuccess="loadAvailmentSuccess" :selected-availment="selectedAvailment"></load-availment>
         </q-card-section>
       </q-card>
   </q-dialog>
@@ -32,7 +32,7 @@ import LoadAvailment from 'components/LoadAvailment'
 export default {
   name: 'Modal',
   components: { LoadAvailment, LoadRdo, SignIn, Login },
-  props: ['component', 'modal', 'title', 'isMaximized', 'classObj', 'isEditing', 'selectedRdo', 'isAdmin', 'selectedUser'],
+  props: ['component', 'modal', 'title', 'isMaximized', 'classObj', 'isEditing', 'selectedRdo', 'isAdmin', 'selectedUser', 'selectedAvailment'],
   data () {
     return {
       localModal: this.modal

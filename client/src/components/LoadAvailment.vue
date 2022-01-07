@@ -15,6 +15,7 @@
 
       <q-select class="col-12 col-md-3"
                 outlined
+                :disable="selectedAvailment != null"
                 :options-dense="true"
                 v-model="availment.category"
                 label="Categoria *"
@@ -30,6 +31,7 @@
       <q-select class="col-12 col-md-2"
                 outlined
                 :options-dense="true"
+                :disable="selectedAvailment != null"
                 v-model="availment.classification"
                 label="Classifica *"
                 :options="classificationOptions" option-label="description"
@@ -45,6 +47,7 @@
 
       <q-input outlined
                v-model="availment.participationFee"
+               :disable="selectedAvailment != null"
                label="Quota richiesta in fase di partecipazione"
                class="col-12 col-md-3"
                style="margin-bottom: 20px"
@@ -52,7 +55,7 @@
                name="participationFee" />
       <q-select class="col-12 col-md-2"
                 outlined
-                :disable="!availment.participationFee"
+                :disable="!availment.participationFee || selectedAvailment != null"
                 :options-dense="true"
                 v-model="partecipationFeeType"
                 label="Tipo"
@@ -70,13 +73,14 @@
       <q-input outlined
                v-model="availment.awardFee"
                label="Quota richiesta in caso di aggiudicazione"
+               :disable="selectedAvailment != null"
                class="col-12 col-md-3"
                style="margin-bottom: 20px"
                type="number"
                name="participationFee" />
       <q-select class="col-12 col-md-2"
                 outlined
-                :disable="!availment.awardFee"
+                :disable="!availment.awardFee || selectedAvailment != null"
                 :options-dense="true"
                 v-model="awardFeeType"
                 label="Tipo"
@@ -93,6 +97,7 @@
 
       <q-input outlined
                v-model="availment.contact"
+               :disable="selectedAvailment != null"
                label="Contatto email *"
                class="col-12 col-md-3"
                type="text"
@@ -102,6 +107,7 @@
       <div class="col-12 col-md-2">
         <q-file
           v-model="soaFile"
+          :disable="selectedAvailment != null"
           label="Allegato SOA"
           accept=".pdf"
           outlined
@@ -118,6 +124,7 @@
         <div>
           <span>Disponibilità Avvalimento Totale</span>
           <q-toggle
+            :disable="selectedAvailment != null"
             v-model="availment.totalAvailment"
             checked-icon="check"
             color="accent"
@@ -130,6 +137,7 @@
           <q-toggle
             v-model="availment.splittedAvailment"
             checked-icon="check"
+            :disable="selectedAvailment != null"
             color="accent"
             unchecked-icon="clear"/>
         </div>
@@ -138,6 +146,7 @@
         <div>
           <span>Disponibilità R.T.I.</span>
           <q-toggle
+            :disable="selectedAvailment != null"
             v-model="availment.rti"
             checked-icon="check"
             color="accent"
@@ -147,6 +156,7 @@
       <div class="col-12 row justify-center q-pt-xl q-pb-xl no-margin">
         <q-btn  push
                 :ripple="false"
+                v-if="selectedAvailment === null"
                 class="col-3"
                 label="Salva"
                 color="secondary"
@@ -168,6 +178,7 @@ import { classifications } from '../costants/options'
 export default {
   name: 'LoadAvailment',
   components: { ConfirmDialog },
+  props: ['selectedAvailment'],
   data () {
     return {
       message: undefined,
@@ -248,22 +259,26 @@ export default {
     }
   },
   async created () {
-    this.classificationOptions = classifications
-    const rdoMacroCategories = await this.getMacroRdo()
-    const workCategory = rdoMacroCategories.macroRdo.find((rdoMacrocategory) => {
-      return rdoMacrocategory.description === 'Lavori'
-    })
-    let obj = {
-      queryparams: { rdomacroId: workCategory._id },
-      order: 'first'
+    if (this.selectedAvailment) {
+      this.availment = JSON.parse(JSON.stringify(this.selectedAvailment))
+    } else {
+      this.classificationOptions = classifications
+      const rdoMacroCategories = await this.getMacroRdo()
+      const workCategory = rdoMacroCategories.macroRdo.find((rdoMacrocategory) => {
+        return rdoMacrocategory.description === 'Lavori'
+      })
+      let obj = {
+        queryparams: { rdomacroId: workCategory._id },
+        order: 'first'
+      }
+      const rdoCategories = await this.getCatRdo(obj)
+      obj = {
+        queryparams: { rdocatId: rdoCategories.catRdo.map(item => item._id) },
+        order: 'first'
+      }
+      const response = await this.getSubRdo(obj)
+      this.categoryOptions = response.subRdo
     }
-    const rdoCategories = await this.getCatRdo(obj)
-    obj = {
-      queryparams: { rdocatId: rdoCategories.catRdo.map(item => item._id) },
-      order: 'first'
-    }
-    const response = await this.getSubRdo(obj)
-    this.categoryOptions = response.subRdo
   },
   async mounted () {
     this.availment.business = this.userLogged.companyName
