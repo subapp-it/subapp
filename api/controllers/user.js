@@ -19,7 +19,9 @@ const update = (req, res, next, loggedIn) => {
     const today =  new Date()
     today.setHours(0,0,0,0)
     req.body.hasFileExpired = today >  req.body.certificateDate || today >  req.body.durcRegolarityDate
-    req.body.blocked = today >  req.body.certificateDate || today >  req.body.durcRegolarityDate
+    if(!req.body.blocked) {
+      req.body.blocked = today >  req.body.certificateDate || today >  req.body.durcRegolarityDate
+    }
     if(today > req.body.certificateDate) {
       req.body.filesExpired.push('Certificato o Visura Camerale')
     } else {

@@ -855,7 +855,7 @@ export default {
         }
       ],
       loading: false,
-      successURL: window.location.origin + '?paymentSuccess=true&username=' + this.user.username,
+      successURL: window.location.origin + '?paymentSuccess=true&username=',
       cancelURL: 'https://www.google.it',
       user: new User(),
       // legalFormOptions: legalFormOptions,
@@ -1171,6 +1171,7 @@ export default {
           this.$q.loading.hide()
           if (!this.isEditing) {
             // this.$emit('signupSuccess', false)
+            this.successURL += this.user.username
             this.$refs.checkoutRef.redirectToCheckout()
           }
         } catch (error) {
