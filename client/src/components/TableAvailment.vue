@@ -180,15 +180,17 @@ export default {
       if (this.data && this.data.length > 0) {
         this.data = []
       }
-      data.forEach((availment) => {
-        if (availment.participationFee) {
-          availment.percentage = availment.participationFee.split(' ')[1]
-        }
-        const obj = {
-          availment: availment
-        }
-        this.data.push(obj)
-      })
+      if (data && data.length > 0) {
+        data.forEach((availment) => {
+          if (availment.participationFee) {
+            availment.percentage = availment.participationFee.split(' ')[1]
+          }
+          const obj = {
+            availment: availment
+          }
+          this.data.push(obj)
+        })
+      }
     },
     loadAvailment () {
       this.$emit('resetSelectedAvailment')
