@@ -95,7 +95,7 @@ exports.login = (req, res, next) => {
         throw error
       }
       if (!payed) {
-        res.status(400).json({ message: 'Registrazione non ancora completata! Controlla l\' e-mail ed esegui gli ultimi passi per completare la registrazione.' })
+        res.status(400).json({ message: 'Stiamo valutando la correttezza dei dati inseriti in fasi di registrazione, riprova più tardi.' })
       } else {
         const token = jwt.sign(
           {

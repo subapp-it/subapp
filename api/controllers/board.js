@@ -42,13 +42,15 @@ const removeRdo = async (rdoId, userId) => {
 
 const removeAvailment = async (availmentId, userId) => {
   let indexToRemove
-  const availment = await Rdo.findById(availmentId)
+  const availment = await Availment.findById(availmentId)
   if (!availment) {
-    const error = new Error('Availment non trovato')
+    const error = new Error('Avvalimento non trovato')
     error.statusCode = 500
     throw error
   }
-  await clearFile(availment.soaFile.Key)
+  if(availment.soaFile) {
+    await clearFile(availment.soaFile.Key)
+  }
   await Availment.findByIdAndRemove(availmentId)
   const user = await User.findById(userId)
   if (!user) {

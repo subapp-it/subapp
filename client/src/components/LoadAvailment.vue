@@ -17,6 +17,7 @@
                 outlined
                 :disable="selectedAvailment != null"
                 :options-dense="true"
+                use-chips
                 v-model="availment.category"
                 label="Categoria *"
                 :options="categoryOptions" option-label="description"
@@ -107,7 +108,7 @@
       <div class="col-12 col-md-2">
         <q-file
           v-model="soaFile"
-          :disable="selectedAvailment != null"
+          v-if="!selectedAvailment"
           label="Allegato SOA"
           accept=".pdf"
           outlined
@@ -153,6 +154,33 @@
             unchecked-icon="clear"/>
         </div>
       </div>
+      <div v-if="selectedAvailment != null" class="col-12 col-md-3">
+        <q-table
+          title="Lista file"
+          :data="data"
+          :columns="columns"
+          row-key="name"
+          bordered
+          separator="cell"
+          :pagination="pagination"
+          :hide-bottom="true"
+        >
+          <template>
+            <div class="col-2 q-table__title">Lista file</div>
+          </template>
+          <template v-slot:body="props">
+            <q-tr :props="props">
+              <q-td  key="description" :props="props">
+                <div>
+                  {{ props.row.file.Key.split('.')[1] }} <span v-if="props.row.file.index != null"> n. {{ props.row.file.index+1 }}</span>
+                </div>
+              </q-td>
+              <q-td key="download" :props="props" >
+                <q-icon v-if="props.row.file.Key" class="text-accent cursor-pointer" name="file_download" style="font-size: 2rem" @click="downloadFile(props.row.file.Key)"></q-icon>  </q-td>
+            </q-tr>
+          </template>
+        </q-table>
+      </div>
       <div class="col-12 row justify-center q-pt-xl q-pb-xl no-margin">
         <q-btn  push
                 :ripple="false"
@@ -191,7 +219,15 @@ export default {
       categoryOptions: [],
       classificationOptions: [],
       isValid: validator.isValid,
-      soaFile: null
+      soaFile: null,
+      pagination: {
+        rowsPerPage: 0
+      },
+      columns: [
+        { name: 'description', label: 'File', align: 'center' },
+        { name: 'download', label: 'Download', align: 'center' }
+      ],
+      data: []
     }
   },
   computed: {
@@ -207,8 +243,24 @@ export default {
       'createAvailment',
       'uploadFile',
       'updateAvailment',
-      'fetchUser'
+      'fetchUser',
+      'fetchFile'
     ]),
+    async downloadFile (key) {
+      const obj = {
+        pathParam: key
+      }
+      const data = await this.fetchFile(obj)
+      window.open(data.url)
+    },
+    getData () {
+      if (this.data.length > 0) this.data = []
+      this.availment.soaFile.index = 0
+      const obj = {
+        file: this.availment.soaFile
+      }
+      this.data.push(obj)
+    },
     openConfirmRdoDialog () {
       this.openConfirmDialog(null, 'Sei sicuro di voler offrire l\' avvalimento?', this.loadAvailment)
     },
@@ -261,6 +313,7 @@ export default {
   async created () {
     if (this.selectedAvailment) {
       this.availment = JSON.parse(JSON.stringify(this.selectedAvailment))
+      this.getData()
     } else {
       this.classificationOptions = classifications
       const rdoMacroCategories = await this.getMacroRdo()

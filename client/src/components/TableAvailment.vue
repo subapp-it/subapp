@@ -6,6 +6,7 @@
     bordered
     :filter="filter"
     :filter-method="customFilter"
+    no-results-label="Nessun avvalimento"
     separator="cell"
     :pagination="pagination"
   >
@@ -44,7 +45,7 @@
           {{ props.row.availment.business }}
         </q-td>
         <q-td style="white-space: normal" :auto-width="true" key="category" :props="props">
-          {{ props.row.availment.category }}
+          {{ props.row.availment.category.description }}
         </q-td>
         <q-td style="white-space: normal" :auto-width="true" key="classification" :props="props">
           {{ props.row.availment.classification }}
@@ -74,7 +75,7 @@
           </div>
         </q-td>
         <q-td :auto-width="true" key="participationFee" :props="props">
-          {{ props.row.availment.participationFee }}
+          {{ props.row.availment.participationFee.split(' ')[0] }}
         </q-td>
         <q-td :auto-width="true" key="percentage" :props="props">
           {{ props.row.availment.percentage }}
@@ -89,8 +90,8 @@
         <q-td :auto-width="true" key="viewAvailment" :props="props">
           <q-icon style="font-size: 2rem;" name="search" @click="openAvailment(props.row.availment)" class="text-accent cursor-pointer"></q-icon>
         </q-td>
-        <q-td v-if="!allAvailments || userLogged.admin" :auto-width="true" key="deleteRdo" :props="props">
-          <q-icon style="font-size: 2rem;" name="delete_forever" class="text-negative cursor-pointer" @click="cancelRdo(props.row.rdo)"></q-icon>
+        <q-td v-if="!allAvailments" :auto-width="true" key="deleteAvailment" :props="props">
+          <q-icon style="font-size: 2rem;" name="delete_forever" class="text-negative cursor-pointer" @click="cancelAvailment(props.row.availment)"></q-icon>
         </q-td>
       </q-tr>
     </template>
@@ -137,8 +138,30 @@ export default {
   },
   methods: {
     ...mapActions([
-      'fetchFile'
+      'fetchFile',
+      'deleteAvailment',
+      'fetchAllAvailments',
+      'fetchUser'
     ]),
+    async cancelAvailment (availment) {
+      this.$q.loading.show()
+      const userId = !this.userLogged.admin ? this.userLogged._id : availment.user._id
+      const objDelete = {
+        pathParam: availment._id + '/' + userId
+      }
+      const objUser = {
+        pathParam: userId
+      }
+      await this.deleteAvailment(objDelete)
+      if (!this.userLogged.admin) {
+        await this.fetchUser(objUser)
+        this.getData(this.userLogged.loadedRdos)
+      } else {
+        await this.fetchAllAvailments()
+        // this.getData(filteredRdos)
+      }
+      this.$q.loading.hide()
+    },
     openAvailment (availment) {
       this.$emit('openSelectedAvailment', availment)
     },
@@ -154,6 +177,9 @@ export default {
         this.data = []
       }
       data.forEach((availment) => {
+        if (availment.participationFee) {
+          availment.percentage = availment.participationFee.split(' ')[1]
+        }
         const obj = {
           availment: availment
         }
@@ -217,6 +243,17 @@ export default {
   mounted () {
     if (!this.allAvailments) {
       this.getData(this.userLogged.loadedAvailments)
+      this.columns.push({ name: 'deleteAvailment', required: true, label: 'Elimina Avvalimento', align: 'center' })
+    }
+  },
+  watch: {
+    userLogged: {
+      deep: true,
+      handler (newVal, oldVal) {
+        if (newVal && !this.allAvailments) {
+          this.getData(newVal.loadedAvailments)
+        }
+      }
     }
   }
 }

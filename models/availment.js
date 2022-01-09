@@ -24,7 +24,7 @@ const availmentSchema = new Schema({
         default: false
     },
     category: {
-        type: String
+        type: Object
     },
     classification: {
         type: String
