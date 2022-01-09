@@ -244,7 +244,8 @@ export default {
       'uploadFile',
       'updateAvailment',
       'fetchUser',
-      'fetchFile'
+      'fetchFile',
+      'fetchAllAvailments'
     ]),
     async downloadFile (key) {
       const obj = {
@@ -301,6 +302,7 @@ export default {
           await this.updateAvailment(obj)
         }
         await this.fetchUser(obj)
+        await this.fetchAllAvailments()
         this.$emit('loadAvailmentSuccess', false)
         this.$q.notify({
           type: 'positive',

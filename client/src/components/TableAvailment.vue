@@ -157,12 +157,12 @@ export default {
         pathParam: userId
       }
       await this.deleteAvailment(objDelete)
+      await this.fetchAllAvailments()
       if (!this.userLogged.admin) {
         await this.fetchUser(objUser)
-        this.getData(this.userLogged.loadedRdos)
+        this.getData(this.userLogged.loadedAvailments)
       } else {
-        await this.fetchAllAvailments()
-        // this.getData(filteredRdos)
+        this.getData(this.boardAvailments)
       }
       this.$q.loading.hide()
     },
