@@ -15,7 +15,7 @@
         <q-tab :ripple="false" name="availmentOfferedByYou" label="Avvalimenti da te offerti" class="q-ml-lg" />
       </q-tabs>
 
-      <h5 v-if="userLogged.admin" class="text-center no-margin">Lista RDO vista ADMIN</h5>
+      <h5 v-if="userLogged.admin" class="text-center no-margin">Lista Avvalimenti vista ADMIN</h5>
       <div>
         <q-tab-panels
           v-model="tab"
@@ -25,7 +25,18 @@
           class="full-width"
         >
           <q-tab-panel name="availments">
-            CIAO
+            <div v-if="(userLogged && boardAvailmentsLoaded)" >
+              <div class="q-pa-lg">
+                <table-availment @resetSelectedRdo="selectedAvailment= null" :allAvailments="true" @openSelectedAvailment="openSelectedAvailment"></table-availment>
+              </div>
+            </div>
+            <div v-if="userLogged.admin && !boardAvailmentsLoaded" class="flex column justify-center items-center q-pt-xl" >
+              <h5 class="text-center no-margin q-pb-lg">Nessun avvalimento trovato</h5>
+            </div>
+            <div v-if="!userLogged.admin && !boardAvailmentsLoaded" class="flex column justify-center items-center q-pt-xl" >
+              <h5 class="text-center no-margin q-pb-lg">Ancora nessun avvalimento caricato </h5>
+            </div>
+            <modal :selected-availment="selectedAvailment" :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle"/>
           </q-tab-panel>
 
           <q-tab-panel name="availmentOfferedByYou">
@@ -40,34 +51,69 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import UserAvailment from 'components/UserAvailment'
+import TableAvailment from 'components/TableAvailment'
+import Modal from 'components/Modal'
 
 export default {
   name: 'Availment',
-  components: { UserAvailment },
+  components: { Modal, TableAvailment, UserAvailment },
   data () {
     return {
       allLoaded: false,
+      selectedAvailment: null,
+      boardAvailmentsLoaded: true,
+      modalComponent: undefined,
+      modalTitle: undefined,
+      isMaximized: false,
+      modal: false,
+      classObj: {},
+      loadAvailmentClassObj: {
+        'q-pa-none': true
+      },
       tab: 'availments'
     }
+  },
+  computed: {
+    ...mapGetters({
+      userLogged: 'user',
+      boardAvailments: 'boardAvailments'
+    })
   },
   methods: {
     ...mapActions([
       'fetchAllAvailments',
       'fetchUser'
     ]),
+    openSelectedAvailment (availment) {
+      this.selectedAvailment = availment
+      this.openModal('load-availment', 'Avvalimento di ' + availment.business, true, this.loadAvailmentClassObj, false)
+    },
+    openModal (component, title, isMaximized, classObj) {
+      this.modalComponent = component
+      this.modalTitle = title
+      this.isMaximized = isMaximized
+      this.modal = true
+      this.classObj = classObj
+    },
     async loadAvailments () {
       this.$q.loading.show()
       if (this.userLogged) {
         await this.fetchAllAvailments()
+        this.boardAvailmentsLoaded = this.boardAvailments.length > 0
         this.allLoaded = true
       }
       this.$q.loading.hide()
     }
   },
-  computed: {
-    ...mapGetters({
-      userLogged: 'user'
-    })
+  watch: {
+    boardAvailments: {
+      deep: true,
+      handler (newVal, oldVal) {
+        if (newVal.length !== oldVal.length) {
+          this.boardAvailmentsLoaded = newVal.length > 0
+        }
+      }
+    }
   },
   async mounted () {
     this.$q.loading.show()

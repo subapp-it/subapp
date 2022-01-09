@@ -1,10 +1,10 @@
 <template>
-  <q-page v-if="userLogged">
+  <div v-if="userLogged">
     <div class="q-pa-lg">
       <table-availment @resetSelectedAvailment="selectedAvailment= null" @openSelectedAvailment="openSelectedAvailment" @openModal="openModal('load-availment', 'Offri Avvalimento', true, loadAvailmentClassObj, false)"></table-availment>
     </div>
     <modal :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle" :selected-availment="selectedAvailment"/>
-  </q-page>
+  </div>
 </template>
 
 <script>

@@ -74,8 +74,11 @@
             <q-icon  class="text-negative cursor-pointer" style="font-size: 1.5rem" name="close"></q-icon>
           </div>
         </q-td>
-        <q-td :auto-width="true" key="participationFee" :props="props">
+        <q-td :auto-width="true" key="participationFee" :props="props" v-if="props.row.availment.participationFee">
           {{ props.row.availment.participationFee.split(' ')[0] }}
+        </q-td>
+        <q-td v-else :auto-width="true" key="participationFee" :props="props">
+          {{ props.row.availment.participationFee }}
         </q-td>
         <q-td :auto-width="true" key="percentage" :props="props">
           {{ props.row.availment.percentage }}
@@ -90,7 +93,7 @@
         <q-td :auto-width="true" key="viewAvailment" :props="props">
           <q-icon style="font-size: 2rem;" name="search" @click="openAvailment(props.row.availment)" class="text-accent cursor-pointer"></q-icon>
         </q-td>
-        <q-td v-if="!allAvailments" :auto-width="true" key="deleteAvailment" :props="props">
+        <q-td v-if="!allAvailments || (allAvailments && userLogged.admin)" :auto-width="true" key="deleteAvailment" :props="props">
           <q-icon style="font-size: 2rem;" name="delete_forever" class="text-negative cursor-pointer" @click="cancelAvailment(props.row.availment)"></q-icon>
         </q-td>
       </q-tr>
@@ -128,7 +131,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userLogged: 'user'
+      userLogged: 'user',
+      boardAvailments: 'boardAvailments'
     }),
     filter () {
       return {
@@ -244,6 +248,11 @@ export default {
     if (!this.allAvailments) {
       this.getData(this.userLogged.loadedAvailments)
       this.columns.push({ name: 'deleteAvailment', required: true, label: 'Elimina Avvalimento', align: 'center' })
+    } else {
+      if (this.userLogged.admin) {
+        this.columns.push({ name: 'deleteAvailment', required: true, label: 'Elimina Avvalimento', align: 'center' })
+      }
+      this.getData(this.boardAvailments)
     }
   },
   watch: {

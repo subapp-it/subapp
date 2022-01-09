@@ -154,7 +154,7 @@
             unchecked-icon="clear"/>
         </div>
       </div>
-      <div v-if="selectedAvailment != null" class="col-12 col-md-3">
+      <div v-if="selectedAvailment != null && selectedAvailment.soaFile" class="col-12 col-md-3">
         <q-table
           title="Lista file"
           :data="data"
@@ -313,7 +313,9 @@ export default {
   async created () {
     if (this.selectedAvailment) {
       this.availment = JSON.parse(JSON.stringify(this.selectedAvailment))
-      this.getData()
+      if (this.availment.soaFile) {
+        this.getData()
+      }
     } else {
       this.classificationOptions = classifications
       const rdoMacroCategories = await this.getMacroRdo()
@@ -334,7 +336,11 @@ export default {
     }
   },
   async mounted () {
-    this.availment.business = this.userLogged.companyName
+    if (this.selectedAvailment) {
+      this.availment.business = this.selectedAvailment.business
+    } else {
+      this.availment.business = this.userLogged.companyName
+    }
     this.$v.$touch()
   },
   watch: {

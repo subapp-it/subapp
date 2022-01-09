@@ -7,6 +7,7 @@ export default {
     // inital state
     return {
       boardRdos: [],
+      boardAvailments: [],
       boardFilteredRdos: []
     }
   },

@@ -1,10 +1,10 @@
 <template>
-  <q-page v-if="userLogged">
+  <div v-if="userLogged">
     <div class="q-pa-lg">
       <table-rdo @openSelectedRdo="openSelectedRdo" @resetSelectedRdo="selectedRdo= null" @openModal="openModal('load-rdo', 'Carica RDO', true, loadRdoClassObj, false)"></table-rdo>
     </div>
     <modal :selected-rdo="selectedRdo" :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle"/>
-  </q-page>
+  </div>
 </template>
 
 <script>
