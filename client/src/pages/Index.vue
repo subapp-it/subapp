@@ -165,7 +165,7 @@
           <div class="flex row-md wrapper">
             <div class="package" style="margin-bottom: 50px;">
               <div class="name">ANNUALE</div>
-              <div class="price one-year">€140</div>
+              <div class="price one-year">€98</div>
               <div class="trial">Offerta lancio</div>
               <hr>
               <ul>
@@ -177,30 +177,6 @@
                 </li>
                 <li>
                   <span class="checkIcon">&#10003;</span>  <strong>NO</strong> percentuali sui lavori o sulla conclusione dell’affare
-                </li>
-              </ul>
-              <br>
-              <div class="text-center q-px-lg">
-                <q-btn v-if="!userLogged" size="md" class="full-width q-pa-xs"
-                       @click="openModal('sign-in', 'registrati', true, singInClassObj)"
-                       style="background: #29ABF4; color: white" label="Scegli il piano"/>
-                <br>
-              </div>
-            </div>
-            <div class="package">
-              <div class="name">BIENNALE</div>
-              <div class="price two-years">€250</div>
-              <div class="trial">Offerta lancio</div>
-              <hr>
-              <ul>
-                <li>
-                  <span class="checkIcon">&#10003;</span>  <strong>NO</strong> costi di acquisizione crediti
-                </li>
-                <li>
-                  <span class="checkIcon">&#10003;</span> <strong>NO</strong> costi di partecipazione alle RDO
-                </li>
-                <li>
-                  <span class="checkIcon">&#10003;</span> <strong>NO</strong> percentuali sui lavori o sulla conclusione dell’affare
                 </li>
               </ul>
               <br>

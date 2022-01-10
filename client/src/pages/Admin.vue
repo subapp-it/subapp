@@ -58,9 +58,6 @@
           <q-td key="annual" :props="props">
             <q-btn push class="bg-accent text-white" :disable="props.row.user.payed"  @click="openConfirmDialog(props.row.user,'Sicuro di voler attivare l\'abbonamento di un anno?', confirmUser, undefined, 1)">Attiva</q-btn>
           </q-td>
-          <q-td key="biennial" :props="props">
-            <q-btn push class="bg-secondary text-white" :disable="props.row.user.payed"  @click="openConfirmDialog(props.row.user,'Sicuro di voler attivare l\'abbonamento di due anni?', confirmUser, undefined, 2)">Attiva</q-btn>
-          </q-td>
           <q-td  key="soaFile" :props="props">
             <q-icon v-if="props.row.user.soaFile" class="text-accent cursor-pointer" name="file_download" style="font-size: 2rem" @click="downloadFile(props.row.user.soaFile.Key)"></q-icon>
             <q-icon class="text-negative" v-else name="remove"></q-icon>
@@ -98,6 +95,15 @@
             <div v-else>
               <q-icon  class="text-negative cursor-pointer" style="font-size: 2rem" name="close"></q-icon>
             </div>
+          </q-td>
+          <q-td key="accessesNumber" :props="props">
+            <span class="text-h6">{{props.row.user.accessesNumber}}</span>
+          </q-td>
+          <q-td key="rdosNumber" :props="props">
+            <span class="text-h6">{{props.row.user.loadedRdos.length}}</span>
+          </q-td>
+          <q-td key="lastLoginDate" :props="props">
+            {{ date.formatDate(props.row.user.lastLoginDate, 'DD-MM-YYYY HH:mm') }}
           </q-td>
           <q-td key="delete" :props="props" >
             <q-icon style="font-size: 2rem;" name="delete_forever" class="text-negative cursor-pointer" @click="openConfirmDialog(props.row.user, 'Sicuro di voler eliminare l\'utente selezionato?', removeUser)"></q-icon>
@@ -171,7 +177,6 @@ export default {
         },
         { name: 'payed', required: true, label: 'Abbonamento', align: 'center' },
         { name: 'annual', required: true, label: 'Annuale', align: 'center' },
-        { name: 'biennial', required: true, label: 'Biennale', align: 'center' },
         { name: 'soaFile', label: 'Soa File', align: 'center' },
         { name: 'isoFile', label: 'Iso File', align: 'center' },
         { name: 'fgasFile', label: 'FGas File', align: 'center' },
@@ -180,6 +185,9 @@ export default {
         { name: 'certificateFile', required: true, label: 'Certificato o Visura Camerale File', align: 'center' },
         { name: 'durcRegolarityFile', required: true, label: 'Regolarità Durc File', align: 'center' },
         { name: 'artSixA', required: true, label: 'Art.6 Lett.a', align: 'center' },
+        { name: 'accessesNumber', required: true, label: 'Numero accessi', align: 'center' },
+        { name: 'rdosNumber', required: true, label: 'Numero RDO caricate', align: 'center' },
+        { name: 'lastLoginDate', required: true, label: 'Ultimo accesso', align: 'center' },
         { name: 'delete', required: true, label: 'Elimina', align: 'center' }
       ],
       data: []

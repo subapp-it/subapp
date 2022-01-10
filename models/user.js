@@ -11,6 +11,9 @@ const userSchema = new Schema({
     type: String,
     required: true
   },
+  accessesNumber: {
+    type: Number
+  },
   country: {
     type: Object,
     ref: 'Country',
@@ -94,6 +97,9 @@ const userSchema = new Schema({
   durcRegolarityFile: {
     type: Object,
     required: true
+  },
+  lastLoginDate: {
+    type: Date
   },
   certificateDate: {
     type: Date,

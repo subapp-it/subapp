@@ -81,7 +81,8 @@ export default {
   methods: {
     ...mapActions([
       'login',
-      'forgottenPassword'
+      'forgottenPassword',
+      'updateUser'
     ]),
     async doForgottenPassword () {
       this.$v.$touch()
@@ -105,6 +106,13 @@ export default {
         this.$q.loading.show()
         const { user } = await this.login(this.user)
         if (!user.blocked) {
+          if (!user.admin) {
+            const obj = { pathParam: user._id }
+            user.accessesNumber += 1
+            user.lastLoginDate = new Date()
+            obj.body = user
+            await this.updateUser(obj)
+          }
           await this.$router.push('/board')
         }
         this.$emit('loginSuccess', false)

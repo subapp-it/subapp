@@ -35,5 +35,7 @@ export default class user {
     this.regulationLetterA = false
     this.filesExpired = []
     this.hasFileExpired = false
+    this.accessesNumber = 0
+    this.lastLoginDate = ''
   }
 }

@@ -116,10 +116,10 @@
             </div>
             <div class="q-pa-md q-gutter-sm">
               <q-btn round color="secondary">
-                <q-icon color="white" name="fab fa-facebook-f"></q-icon>
+                <q-icon color="white" name="fab fa-facebook-f" @click="goToFacebookPage"></q-icon>
               </q-btn>
               <q-btn round color="secondary">
-                <q-icon color="white" name="fab fa-instagram"></q-icon>
+                <q-icon color="white" name="fab fa-instagram" @click="goToInstagramPage"></q-icon>
               </q-btn>
               <!--
               <q-btn round color="secondary">
@@ -183,6 +183,12 @@ export default {
       'signupPaymentSuccess',
       'deleteUser'
     ]),
+    goToFacebookPage () {
+      window.open('https://www.facebook.com/subapp.it', '_blank')
+    },
+    goToInstagramPage () {
+      window.open('https://www.instagram.com/subapp.it/', '_blank')
+    },
     scrollToElement (id) {
       const el = document.getElementById(id)
       const target = getScrollTarget(el)
