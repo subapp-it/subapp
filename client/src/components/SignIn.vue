@@ -856,7 +856,7 @@ export default {
       ],
       loading: false,
       successURL: window.location.origin + '?paymentSuccess=true&username=',
-      cancelURL: 'https://www.google.it',
+      cancelURL: window.location.origin + '?paymentSuccess=false&username=',
       user: new User(),
       // legalFormOptions: legalFormOptions,
       imports: imports,
@@ -1172,6 +1172,7 @@ export default {
           if (!this.isEditing) {
             // this.$emit('signupSuccess', false)
             this.successURL += this.user.username
+            this.cancelURL += this.user.username
             this.$refs.checkoutRef.redirectToCheckout()
           }
         } catch (error) {

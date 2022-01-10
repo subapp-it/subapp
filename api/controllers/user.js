@@ -163,43 +163,42 @@ exports.fetchUsers = (req, res, next) => {
     })
 }
 
-exports.deleteUser = (req, res, next) => {
-  const { userId } = req.params
-  let userFound = undefined
-  User.findById(userId)
-    .then((user) => {
-      if (!user) {
-        const error = new Error('Impossibile trovare l\'utente.')
-        error.statusCode = 404
-        throw error
-      }
-      userFound = user
-      clearAllFile(user)
-
-      const idList = user.loadedRdos.map((rdo) => rdo._id)
-      return Rdo.deleteMany({
-        '_id': {$in: idList}
-      })
-
+exports.deleteUser = async (req, res, next) => {
+  try {
+    const { param } = req.params
+    let user = undefined
+    if(!param.includes("@")) {
+      user = await User.findById(param)
+    } else {
+      let result = await User.find({username: param})
+      user = result[0]
+    }
+    if (!user) {
+      const error = new Error('Impossibile trovare l\'utente.')
+      error.statusCode = 404
+      throw error
+    }
+    clearAllFile(user)
+    let idList = user.loadedRdos.map((rdo) => rdo._id)
+    await Rdo.deleteMany({
+      '_id': {$in: idList}
     })
-    .then(() => {
-      const idList = userFound.loadedAvailments.map((availment) => availment._id)
-      return Availment.deleteMany({
-        '_id': {$in: idList}
-      })
+    idList = user.loadedAvailments.map((availment) => availment._id)
+    await Availment.deleteMany({
+      '_id': {$in: idList}
     })
-    .then(() => {
-        return User.findByIdAndRemove(userId)
-    })
-    .then(() => {
-      res.status(200).json({ message: 'Utente eliminato con successo!' })
-    })
-    .catch((err) => {
-      if (!err.statusCode) {
-        err.statusCode = 500
-      }
-      next(err)
-    })
+    if(!param.includes("@")) {
+      await User.findByIdAndRemove(param)
+    } else {
+      await User.findOneAndDelete({username:param})
+    }
+    res.status(200).json({ message: 'Utente eliminato con successo!' })
+  } catch(err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
 }
 
 exports.deleteUserFiles = (req, res, next) => {

@@ -50,7 +50,7 @@ route.get('/all', isAuth, userController.fetchUsers)
 route.post('/update/:userId', isAuth, userController.updateLoggedUser)
 route.post('/:userId', userController.updateRegisteringUser) // l'unica route senza isAuth middleware perché serve in fase di reg per fare upload del file sullo user
 route.get('/:userId', isAuth, userController.fetchUser)
-route.delete('/:userId', isAuth, userController.deleteUser)
+route.delete('/:param', isAuth, userController.deleteUser)
 route.post('/:userId/deletefiles', isAuth, userController.deleteUserFiles)
 route.get('/file/:fileId', isAuth, userController.getFile)
 

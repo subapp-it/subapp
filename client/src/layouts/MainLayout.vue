@@ -180,7 +180,8 @@ export default {
   },
   methods: {
     ...mapActions([
-      'signupPaymentSuccess'
+      'signupPaymentSuccess',
+      'deleteUser'
     ]),
     scrollToElement (id) {
       const el = document.getElementById(id)
@@ -250,12 +251,24 @@ export default {
     }
   },
   async mounted () {
-    if (this.$route.query.paymentSuccess && this.$route.query.username) {
+    if (this.$route.query.paymentSuccess === 'true' && this.$route.query.username) {
       await this.signupPaymentSuccess({ username: this.$route.query.username })
       setTimeout(() => {
         this.$q.notify({
           type: 'positive',
           message: 'Ci siamo quasi! Entro 24h il tuo account sarà attivo. Controlla la tua casella postale'
+        })
+      }, 1000)
+    }
+    if (this.$route.query.paymentSuccess === 'false' && this.$route.query.username) {
+      const obj = {
+        pathParam: this.$route.query.username
+      }
+      await this.deleteUser(obj)
+      setTimeout(() => {
+        this.$q.notify({
+          type: 'negative',
+          message: 'Pagamento fallito'
         })
       }, 1000)
     }
