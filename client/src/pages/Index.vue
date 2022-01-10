@@ -157,7 +157,7 @@
             </p>
             <h5 class="text-center ">
               <span
-                class="text-center text-h6">Scegli il piano giusto per te!</span>
+                class="text-center text-h6">Il piano giusto per te!</span>
             </h5>
           </header>
         </div>
