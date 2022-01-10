@@ -196,7 +196,7 @@ export default {
       this.$emit('resetSelectedAvailment')
       this.$emit('openModal')
     },
-    customFilter (rows, terms) {
+    customFilter: function (rows, terms) {
       const lowerSearch = terms.search ? terms.search.toLowerCase() : ''
 
       const filteredRows = rows.filter(
@@ -206,20 +206,13 @@ export default {
 
           if (lowerSearch !== '') {
             s1 = false
-            const searchObj = { }
-            Object.entries(row.rdo).forEach((obj) => {
-              if (obj[0] === 'rdos') {
-                searchObj.descMacro = obj[1].descMacro
-                searchObj.subCategory = obj[1].description
+            const searchObj = {}
+            Object.entries(row.availment).forEach((obj) => {
+              if (obj[0] === 'business' || obj[0] === 'contact') {
+                searchObj[obj[0]] = row.availment[obj[0]]
               }
-              if (obj[0] === 'regionOfInterest') {
-                searchObj[obj[0]] = obj[1].description
-              }
-              if (obj[0] === 'import') {
-                searchObj[obj[0]] = obj[1]
-              }
-              if (obj[0] === 'contractor') {
-                searchObj[obj[0]] = obj[1]
+              if (obj[0] === 'category') {
+                searchObj[obj[0]] = row.availment[obj[0]].description
               }
             })
 

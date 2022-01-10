@@ -5,6 +5,7 @@
     row-key="name"
     bordered
     :filter="filter"
+    no-results-label="Nessuna RDO"
     :filter-method="customFilter"
     separator="cell"
     :pagination="pagination"

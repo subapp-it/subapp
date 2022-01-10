@@ -34,7 +34,7 @@
               <h5 class="text-center no-margin q-pb-lg">Nessun avvalimento trovato</h5>
             </div>
             <div v-if="!userLogged.admin && !boardAvailmentsLoaded" class="flex column justify-center items-center q-pt-xl" >
-              <h5 class="text-center no-margin q-pb-lg">Ancora nessun avvalimento caricato </h5>
+              <h5 class="text-center no-margin q-pb-lg">Ancora nessun avvalimento caricato</h5>
             </div>
             <modal :selected-availment="selectedAvailment" :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle"/>
           </q-tab-panel>
@@ -96,7 +96,6 @@ export default {
       this.classObj = classObj
     },
     async loadAvailments () {
-      this.$q.loading.show()
       if (this.userLogged) {
         await this.fetchAllAvailments()
         this.boardAvailmentsLoaded = this.boardAvailments.length > 0

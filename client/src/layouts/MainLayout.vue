@@ -186,7 +186,7 @@ export default {
       const el = document.getElementById(id)
       const target = getScrollTarget(el)
       const offset = el.offsetTop + 3
-      const duration = 400
+      const duration = 600
       setScrollPosition(target, offset, duration)
     },
     openModal (component, title, isMaximized, classObj, isEditing) {
