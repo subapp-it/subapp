@@ -17,6 +17,7 @@
           <sign-in :is-admin="isAdmin" :selectedUser="selectedUser" :is-editing="isEditing" @editSelectedUserSuccess="editSelectedUserSuccess" @signupSuccess="signupSuccess" @editSuccess="editSuccess" v-if="component === 'sign-in'" ></sign-in>
           <load-rdo :selected-rdo="selectedRdo" @loadRdoSuccess="loadRdoSuccess"  v-if="component==='load-rdo'"></load-rdo>
           <load-availment v-if="component==='load-availment'" @loadAvailmentSuccess="loadAvailmentSuccess" :selected-availment="selectedAvailment"></load-availment>
+          <load-contract v-if="component==='load-contract'" @loadContractSuccess="loadContractSuccess" :selected-contract="selectedContract"></load-contract>
         </q-card-section>
       </q-card>
   </q-dialog>
@@ -28,11 +29,12 @@ import Login from 'components/Login'
 import SignIn from 'components/SignIn'
 import LoadRdo from 'components/LoadRdo'
 import LoadAvailment from 'components/LoadAvailment'
+import LoadContract from 'components/LoadContract'
 
 export default {
   name: 'Modal',
-  components: { LoadAvailment, LoadRdo, SignIn, Login },
-  props: ['component', 'modal', 'title', 'isMaximized', 'classObj', 'isEditing', 'selectedRdo', 'isAdmin', 'selectedUser', 'selectedAvailment'],
+  components: { LoadContract, LoadAvailment, LoadRdo, SignIn, Login },
+  props: ['component', 'modal', 'title', 'isMaximized', 'classObj', 'isEditing', 'selectedRdo', 'isAdmin', 'selectedUser', 'selectedAvailment', 'selectedContract'],
   data () {
     return {
       localModal: this.modal
@@ -53,6 +55,9 @@ export default {
       this.$emit('update:modal', value)
     },
     loadAvailmentSuccess (value) {
+      this.$emit('update:modal', value)
+    },
+    loadContractSuccess (value) {
       this.$emit('update:modal', value)
     },
     editSuccess (value) {

@@ -29,6 +29,11 @@ export default {
     commit('SET_BOARD_AVAILMENTS', data)
     return data
   },
+  async fetchAllContracts ({ commit }) {
+    const { data } = await BoardService.get('/contract/all')
+    commit('SET_BOARD_CONTRACTS', data)
+    return data
+  },
   async fetchFilteredRdos ({ commit }, { queryparams }) {
     const { data } = await BoardService.get('/rdo?' + querystring.stringify(queryparams))
     commit('SET_BOARD_FILTERED_RDOS', data)

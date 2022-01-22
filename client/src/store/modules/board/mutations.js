@@ -5,6 +5,9 @@ export default {
   SET_BOARD_AVAILMENTS (state, payload) {
     state.boardAvailments = payload.availments
   },
+  SET_BOARD_CONTRACTS (state, payload) {
+    state.boardContracts = payload.contracts
+  },
   SET_BOARD_FILTERED_RDOS (state, payload) {
     state.boardFilteredRdos = payload.rdos
   },
