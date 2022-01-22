@@ -10,7 +10,8 @@ const routes = [
       { path: '/termCondition', name: 'termCondition', component: () => import('pages/TermAndCond.vue') },
       { path: '/cookiePolicy', name: 'cookiePolicy', component: () => import('pages/CookiePolicy.vue') },
       { path: '/board', name: 'board', component: () => import('pages/Board.vue') },
-      { path: '/availment', name: 'availment', component: () => import('pages/Availment.vue') }
+      { path: '/availment', name: 'availment', component: () => import('pages/Availment.vue') },
+      { path: '/contract', name: 'contract', component: () => import('pages/Contract.vue') }
     ]
   },
   {

@@ -23,6 +23,12 @@ const contractSchema = new Schema({
         type: Number,
         required: true
     },
+    region: {
+        type: String
+    },
+    place: {
+        type: String
+    },
     link: {
         type: String
     }
