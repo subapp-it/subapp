@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq,no-underscore-dangle,prefer-const,no-restricted-syntax,no-await-in-loop,no-unused-expressions,no-sequences,max-len,no-param-reassign,no-lonely-if,guard-for-in */
 const Rdo = require('../../models/rdo')
 const Availment = require('../../models/availment')
+const Contract = require('../../models/contract')
 const User = require('../../models/user')
 const { clearFile } = require('../../utils/utils')
 const nodeMailer = require('../../utils/nodeMailer')
@@ -168,6 +169,35 @@ exports.findAllAvailments = async (req, res, next) => {
       })
 }
 
+exports.findAllContracts = async (req, res, next) => {
+  try {
+    const contracts = await Contract.find().sort('createdAt')
+    res.status(200).json({
+      contracts
+    })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+exports.findOneContract = async (req, res, next) => {
+  try {
+    const { contractId } = req.params
+    const contract = await Contract.findById(contractId)
+    res.status(200).json({
+      contract
+    })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
 exports.findOneRdo = (req, res, next) => {
   const { rdoId } = req.params
   Rdo.findById(rdoId)
@@ -286,6 +316,20 @@ exports.insertAvailment = async (req, res, next) => {
   }
 }
 
+exports.insertContract = async (req, res, next) => {
+  try {
+    const { body } = req
+    const contract = new Contract(body)
+    await contract.save()
+    res.status(200).json({ contract })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
 exports.updateRdo = (req, res, next) => {
   const { rdoId } = req.params
   const { userId } = req.params
@@ -368,6 +412,15 @@ exports.updateAvailment = (req, res, next) => {
         }
         next(err)
       })
+}
+
+exports.updateContract = async (req, res, next) => {
+  const { contractId } = req.params
+  await Availment.findByIdAndUpdate(contractId, req.body, {
+    overwrite: false,
+    new: true
+  })
+  res.status(200).json({})
 }
 
 exports.deleteRdo = async (req, res, next) => {
