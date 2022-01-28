@@ -70,6 +70,16 @@ const removeAvailment = async (availmentId, userId) => {
   await user.save()
 }
 
+const removeContract = async (contractId) => {
+  const contract = await Contract.findById(contractId)
+  if (!contract) {
+    const error = new Error('Appalto non trovato')
+    error.statusCode = 500
+    throw error
+  }
+  await Contract.findByIdAndRemove(contractId)
+}
+
 const deleteExpiredRDO = async (next) => {
   try {
     const rdos = await Rdo.find({ expirationDate: { $lt: new Date() } })
@@ -443,6 +453,19 @@ exports.deleteAvailment = async (req, res, next) => {
   try {
     await removeAvailment(availmentId, userId)
     res.status(200).json({ message: 'Avvalimento eliminato con successo!' })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+exports.deleteContract = async (req, res, next) => {
+  const { contractId } = req.params
+  try {
+    await removeContract(contractId)
+    res.status(200).json({ message: 'Appalto eliminato con successo!' })
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500

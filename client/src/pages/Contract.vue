@@ -1,12 +1,15 @@
 <template>
   <q-page v-if="userLogged && allLoaded">
-    <div class="q-pa-lg">
-      <q-btn @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false)"></q-btn>
-    </div>
-    <div v-if="(userLogged && boardContractsLoaded)" >
+    <div v-if="(userLogged && boardContractsLoaded)" class="flex column justify-center items-center q-pt-md">
+      <div class="flex items-center">
+        <h5 class="text-center no-margin">Lista appalti</h5>
+        <q-btn round flat icon="add" class="q-ml-md" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false)" />
+      </div>
+      <contract-card v-for="(contract,index) in boardContracts" :contract="contract" :key="index" :index="index" class="q-mb-md"></contract-card>
     </div>
     <div v-if="userLogged.admin && !boardContractsLoaded" class="flex column justify-center items-center q-pt-xl" >
       <h5 class="text-center no-margin q-pb-lg">Ancora nessun appalto caricato</h5>
+      <q-btn push label="Carica appalto" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false)" />
     </div>
     <div v-if="!userLogged.admin && !boardContractsLoaded" class="flex column justify-center items-center q-pt-xl" >
       <h5 class="text-center no-margin q-pb-lg">Ancora nessun appalto caricato</h5>
@@ -18,10 +21,11 @@
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import Modal from 'components/Modal'
+import ContractCard from 'components/ContractCard'
 
 export default {
   name: 'Contract',
-  components: { Modal },
+  components: { ContractCard, Modal },
   data () {
     return {
       allLoaded: false,
@@ -62,6 +66,16 @@ export default {
       this.isMaximized = isMaximized
       this.modal = true
       this.classObj = classObj
+    }
+  },
+  watch: {
+    boardContracts: {
+      deep: true,
+      handler (newVal, oldVal) {
+        if (newVal.length !== oldVal.length) {
+          this.boardContractsLoaded = newVal.length > 0
+        }
+      }
     }
   },
   async mounted () {

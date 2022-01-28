@@ -20,17 +20,20 @@ const contractSchema = new Schema({
         required: true
     },
     amount: {
-        type: Number,
+        type: String,
         required: true
     },
     region: {
-        type: String
+        type: String,
+        required: true
     },
     place: {
-        type: String
+        type: String,
+        required: true
     },
     link: {
-        type: String
+        type: String,
+        required: true
     }
 },
 { timestamps: true })

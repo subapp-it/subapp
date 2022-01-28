@@ -11,12 +11,20 @@ export default {
     const { data } = await BoardService.post('/availment/' + pathParam, body)
     return data
   },
+  async createContract ({ commit }, { body }) {
+    const { data } = await BoardService.post('/contract', body)
+    return data
+  },
   async updateRdo ({ commit }, { pathParam, body }) {
     const { data } = await BoardService.put('/rdo/' + pathParam, body)
     return data
   },
   async updateAvailment ({ commit }, { pathParam, body }) {
     const { data } = await BoardService.put('/availment/' + pathParam, body)
+    return data
+  },
+  async updateContract ({ commit }, { pathParam, body }) {
+    const { data } = await BoardService.put('/contract/' + pathParam, body)
     return data
   },
   async fetchAllRdos ({ commit }) {
@@ -56,7 +64,11 @@ export default {
   },
   async deleteAvailment ({ commit }, { pathParam }) {
     const { data } = await BoardService.delete('/availment/' + pathParam)
-    commit('SET_AVAILMENT', data)
+    // commit('SET_AVAILMENT', data)
+    return data
+  },
+  async deleteContract ({ commit }, { pathParam }) {
+    const { data } = await BoardService.delete('/contract/' + pathParam)
     return data
   }
 }
