@@ -1,6 +1,6 @@
 <template>
   <q-card class="my-card" style="min-width: 60%">
-    <q-card-section class="relative-position">
+    <q-card-section class="relative-position" style="overflow-wrap: break-word;">
       <q-btn v-if="userLogged.admin" round flat icon="fas fa-trash-alt" class="absolute-top-right" color="negative" @click="removeContract"/>
       <q-btn v-if="userLogged.admin" round flat icon="fas fa-pencil-alt" class="absolute-top-right q-mr-xl" color="primary" @click="modifyContract"/>
       <div class="q-pb-md">

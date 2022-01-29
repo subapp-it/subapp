@@ -10,8 +10,8 @@
                   align="justify"
                   shrink
                   :breakpoint="0">
-              <q-tab v-if="$route.name==='home'" @click="scrollToElement('id_how_works')" label="Come Funziona" >
-              </q-tab>
+              <q-tab v-if="$route.name==='home'" @click="scrollToElement('id_how_works')" label="Come Funziona" ></q-tab>
+              <q-tab v-if="$route.name==='home'" @click="scrollToElement('services')" label="Servizi Aggiuntivi" ></q-tab>
               <q-tab v-if="!isAuthenticated" @click="scrollToElement('id_pricing')" label="Prezzi" />
               <q-tab v-if="$route.name==='home'" @click="scrollToElement('contact_us')" label="Contatti" />
               <q-tab v-if="!isAuthenticated" @click="openModal('login', 'accedi', false, loginClassObj, false)" label="Accedi"/>

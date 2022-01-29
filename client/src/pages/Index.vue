@@ -89,12 +89,80 @@
         </footer>
       </div>
     </section>
+    <section  class="fullpage desktop-only services-section" id="services">
+      <div class="row wrap justify-center content-center services-section-container">
+        <div class="row col-12 q-gutter-y-xs">
+          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+            <header>
+              <p class="cutted_title">
+                <span class="cutted_title--text">SERVIZI AGGIUNTIVI</span>
+              </p>
+            </header>
+          </div>
+        </div>
+      </div>
+        <div class="flex justify-around column-sm">
+          <q-card class="zoom q-pa-sm flex flex-center column box-shadow" data-aos="slide-right" data-aos-duration="750" style="max-width: 30%">
+            <q-card-section class="text-center">
+              <q-icon size="80px" name="fab fa-buffer" class="q-mb-md" :style="'color:'+theme_color"/>
+              <div class="text-h6">Avvalimenti Soa</div>
+            </q-card-section>
+            <q-card-section class="q-pt-none" style="position: relative;">
+              Cerca ed offri disponibilità per avvalimenti SOA o per R.T.I.
+              senza costi di intermediazione!
+            </q-card-section>
+          </q-card>
+          <q-card class="zoom q-pa-sm flex flex-center column box-shadow" data-aos="slide-left" data-aos-duration="750" style="max-width: 30%">
+            <q-card-section class="text-center">
+              <q-icon size="80px" name="fas fa-file-contract" class="q-mb-md" :style="'color:'+theme_color"/>
+              <div class="text-h6">Focus Appalti</div>
+            </q-card-section>
+            <q-card-section class="q-pt-none" style="position: relative;">
+              Le procedure di maggior rilievo pubblicate a tua disposizione con un click
+            </q-card-section>
+          </q-card>
+        </div>
+    </section>
+    <section  class="fullpage mobile-only services-section" id="services">
+      <div class="row wrap justify-center content-center services-section-container">
+        <div class="row col-12 q-gutter-y-xs">
+          <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+            <header>
+              <p class="cutted_title">
+                <span class="cutted_title--text">SERVIZI AGGIUNTIVI</span>
+              </p>
+            </header>
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-around column-sm">
+        <q-card class="zoom q-pa-sm flex flex-center column box-shadow q-ma-md" data-aos="slide-right" data-aos-duration="750">
+          <q-card-section class="text-center">
+            <q-icon size="80px" name="fab fa-buffer" class="q-mb-md" :style="'color:'+theme_color"/>
+            <div class="text-h6">Avvalimenti Soa</div>
+          </q-card-section>
+          <q-card-section class="q-pt-none" style="position: relative;">
+            Cerca ed offri disponibilità per avvalimenti SOA o per R.T.I.
+            senza costi di intermediazione!
+          </q-card-section>
+        </q-card>
+        <q-card class="zoom q-pa-sm flex flex-center column box-shadow q-ma-md" data-aos="slide-left"  data-aos-duration="750">
+          <q-card-section class="text-center">
+            <q-icon size="80px" name="fas fa-file-contract" class="q-mb-md" :style="'color:'+theme_color"/>
+            <div class="text-h6">Focus Appalti</div>
+          </q-card-section>
+          <q-card-section class="q-pt-none" style="position: relative;">
+            Le procedure di maggior rilievo pubblicate a tua disposizione con un click
+          </q-card-section>
+        </q-card>
+      </div>
+    </section>
     <q-space></q-space>
     <section class="fullpage section-card">
       <div class="row text-center flex flex-center">
           <div  class="col-md-5 col-lg-5 col-sx-12 col-sm-12">
             <div class="q-pa-md">
-              <q-card data-aos="slide-right" data-aos-delay="200" data-aos-duration="750" class="my-card card-left">
+              <q-card data-aos="slide-right" data-aos-duration="750" class="my-card card-left">
                 <q-parallax
                   src="../assets/signature.jpg"
                   :height="350"
@@ -120,7 +188,7 @@
           </div>
           <div  class="col-md-5 col-lg-5 col-sx-12 col-sm-12">
             <div class="q-pa-md">
-              <q-card data-aos="slide-left" data-aos-delay="200" data-aos-duration="750" class="my-card card-right">
+              <q-card data-aos="slide-left" data-aos-duration="750" class="my-card card-right">
                 <q-parallax
                   src="../assets/crane.jpg"
                   :height="350"

@@ -438,6 +438,44 @@
   }
 }
 
+.services-section {
+  .services-section-container {
+    margin: 0 auto;
+    padding-top: 4rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    header {
+      margin-bottom: 2rem;
+      display: block;
+      width: 100%;
+      .cutted_title {
+        color: $primary;
+        display: block;
+        text-align: center;
+        position: relative;
+        .cutted_title--text {
+          position: relative;
+          z-index: 1;
+          padding: 0 1rem;
+          font-size: 1.23rem;
+          font-weight: 500;
+          background-color: #fff;
+          color: $primary;
+        }
+        &:before {
+          background-color: $primary;
+        }
+      }
+      .text-h6 {
+        font-size: 1.23rem;
+        font-weight: 400;
+        color: $primary;
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
 *{
   box-sizing: border-box;
 }

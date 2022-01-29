@@ -3,7 +3,7 @@
     <div v-if="(userLogged && boardContractsLoaded)" class="flex column justify-center items-center q-pt-md">
       <div class="flex items-center">
         <h5 class="text-center no-margin">Lista appalti</h5>
-        <q-btn round flat icon="add" class="q-ml-md" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false), selectedContract = null" />
+        <q-btn v-if="userLogged.admin" round flat icon="add" class="q-ml-md" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false), selectedContract = null" />
       </div>
       <contract-card v-for="(contract,index) in boardContracts" :contract="contract" :key="index" :index="index" class="q-mb-md" @modifyContract="modifyContract"></contract-card>
     </div>
