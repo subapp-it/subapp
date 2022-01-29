@@ -425,12 +425,19 @@ exports.updateAvailment = (req, res, next) => {
 }
 
 exports.updateContract = async (req, res, next) => {
-  const { contractId } = req.params
-  await Availment.findByIdAndUpdate(contractId, req.body, {
-    overwrite: false,
-    new: true
-  })
-  res.status(200).json({})
+  try {
+    const { contractId } = req.params
+    await Contract.findByIdAndUpdate(contractId, req.body, {
+      overwrite: false,
+      new: true
+    })
+    res.status(200).json({})
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
 }
 
 exports.deleteRdo = async (req, res, next) => {

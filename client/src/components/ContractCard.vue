@@ -1,7 +1,8 @@
 <template>
   <q-card class="my-card" style="min-width: 60%">
     <q-card-section class="relative-position">
-      <q-btn v-if="userLogged.admin" round flat icon="delete" class="q-ml-md absolute-top-right" color="negative" @click="removeContract"/>
+      <q-btn v-if="userLogged.admin" round flat icon="fas fa-trash-alt" class="absolute-top-right" color="negative" @click="removeContract"/>
+      <q-btn v-if="userLogged.admin" round flat icon="fas fa-pencil-alt" class="absolute-top-right q-mr-xl" color="primary" @click="modifyContract"/>
       <div class="q-pb-md">
         <span class="text-body1 text-weight-medium">Ente: </span>
         <span class="text-body2">{{ contract.entity }}</span>
@@ -64,6 +65,9 @@ export default {
       await this.deleteContract(objDelete)
       await this.fetchAllContracts()
       this.$q.loading.hide()
+    },
+    modifyContract () {
+      this.$emit('modifyContract', this.contract)
     }
   }
 }

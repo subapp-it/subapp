@@ -3,9 +3,9 @@
     <div v-if="(userLogged && boardContractsLoaded)" class="flex column justify-center items-center q-pt-md">
       <div class="flex items-center">
         <h5 class="text-center no-margin">Lista appalti</h5>
-        <q-btn round flat icon="add" class="q-ml-md" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false)" />
+        <q-btn round flat icon="add" class="q-ml-md" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false), selectedContract = null" />
       </div>
-      <contract-card v-for="(contract,index) in boardContracts" :contract="contract" :key="index" :index="index" class="q-mb-md"></contract-card>
+      <contract-card v-for="(contract,index) in boardContracts" :contract="contract" :key="index" :index="index" class="q-mb-md" @modifyContract="modifyContract"></contract-card>
     </div>
     <div v-if="userLogged.admin && !boardContractsLoaded" class="flex column justify-center items-center q-pt-xl" >
       <h5 class="text-center no-margin q-pb-lg">Ancora nessun appalto caricato</h5>
@@ -14,7 +14,7 @@
     <div v-if="!userLogged.admin && !boardContractsLoaded" class="flex column justify-center items-center q-pt-xl" >
       <h5 class="text-center no-margin q-pb-lg">Ancora nessun appalto caricato</h5>
     </div>
-    <modal :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle" :selected-contract="selectedContract"/>
+    <modal @resetSelectedContract='resetSelectedContract' :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle" :selected-contract="selectedContract"/>
   </q-page>
 </template>
 
@@ -52,6 +52,11 @@ export default {
       'fetchAllContracts',
       'fetchUser'
     ]),
+    modifyContract (selectedContract) {
+      console.log('ciao', selectedContract)
+      this.selectedContract = selectedContract
+      this.openModal('load-contract', 'Modifica Appalto', true, this.loadContractClassObj, false)
+    },
     async loadContracts () {
       if (this.userLogged) {
         await this.fetchAllContracts()

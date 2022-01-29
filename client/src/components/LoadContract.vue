@@ -62,7 +62,7 @@
         <q-btn  push
                 :ripple="false"
                 class="col-2"
-                label="Carica Appalto"
+                :label="selectedContract ? 'Modifica Appalto' : 'Carica Appalto'"
                 color="secondary"
                 type='submit'/>
       </div>
@@ -81,6 +81,7 @@ import { required } from 'vuelidate/lib/validators'
 export default {
   name: 'LoadContract',
   components: { ConfirmDialog },
+  props: ['selectedContract'],
   data () {
     return {
       message: undefined,
@@ -94,10 +95,12 @@ export default {
   methods: {
     ...mapActions([
       'fetchAllContracts',
-      'createContract'
+      'createContract',
+      'updateContract'
     ]),
     openConfirmContractDialog () {
-      this.openConfirmDialog(null, 'Sei sicuro di voler caricare l\' appalto?', this.loadContract)
+      const message = this.selectedContract ? 'Sei sicuro di voler modificare l\' appalto?' : 'Sei sicuro di voler caricare l\' appalto?'
+      this.openConfirmDialog(null, message, this.loadContract)
     },
     openConfirmDialog (data, message, callback) {
       this.callback = callback
@@ -108,15 +111,26 @@ export default {
     async loadContract () {
       if (!this.$v.$invalid) {
         this.$q.loading.show()
-        const obj = {
-          body: this.contract
+        let message = ''
+        if (this.selectedContract) {
+          const obj = {
+            pathParam: this.contract._id,
+            body: this.contract
+          }
+          await this.updateContract(obj)
+          message = 'Appalto modificato con successo!'
+        } else {
+          const obj = {
+            body: this.contract
+          }
+          await this.createContract(obj)
+          message = 'Appalto caricato con successo!'
         }
-        await this.createContract(obj)
         await this.fetchAllContracts()
         this.$emit('loadContractSuccess', false)
         this.$q.notify({
           type: 'positive',
-          message: 'Appalto caricato con successo!'
+          message: message
         })
         this.$q.loading.hide()
       }
@@ -124,6 +138,14 @@ export default {
   },
   async mounted () {
     this.$v.$touch()
+  },
+  created () {
+    if (this.selectedContract) {
+      this.contract = JSON.parse(JSON.stringify(this.selectedContract))
+      console.log(this.contract)
+    } else {
+      this.contract = new Contract()
+    }
   },
   validations () {
     return {
