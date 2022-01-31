@@ -58,6 +58,25 @@
                  :rules="[ (val) => isValid('subject', val, $v.contract) ]"
                  class="col-12 col-md-3" />
       <div class="desktop-only col-md-3"></div>
+      <q-input  @click="$refs.qDateCertificateProxy.show()"
+                v-if="!selectedContract"
+                onkeydown="return false"
+                class="col-12 col-md-3" label="Data Scadenza"
+                :rules="[ (val) => isValid('date', val, $v) ]"
+                outlined v-model="date" mask="##/##/####">
+        <template v-slot:append>
+          <q-icon name="event" class="cursor-pointer">
+            <q-popup-proxy ref="qDateCertificateProxy" transition-show="scale" transition-hide="scale">
+              <q-date :locale="currentLocale" v-model="date" :options="calendarDataScadenza"  mask="DD/MM/YYYY">
+                <div class="row items-center justify-end q-gutter-sm">
+                  <q-btn label="Annulla" color="primary" flat v-close-popup />
+                  <q-btn label="OK" color="primary" flat v-close-popup />
+                </div>
+              </q-date>
+            </q-popup-proxy>
+          </q-icon>
+        </template>
+      </q-input>
       <div class="col-12 row justify-center q-pt-md no-margin">
         <q-btn  push
                 :ripple="false"
@@ -77,6 +96,7 @@ import { mapActions } from 'vuex'
 import Contract from 'src/model/contract'
 import validator from 'src/validations/validator'
 import { required } from 'vuelidate/lib/validators'
+import { date } from 'quasar'
 
 export default {
   name: 'LoadContract',
@@ -89,7 +109,15 @@ export default {
       callback: undefined,
       confirm: false,
       contract: new Contract(),
-      isValid: validator.isValid
+      isValid: validator.isValid,
+      date: null,
+      currentLocale: {
+        days: 'Domenica_Lunedì_Martedì_Mercoledì_Giovedì_Sabato'.split('_'),
+        daysShort: 'Dom_Lun_Mar_Mer_Gio_Ven_Sab'.split('_'),
+        months: 'Gennaio_Febbraio_Marzo_Aprile_Maggio_Giugno_Luglio_Agosto_Settembre_Ottobre_Novembre_Dicembre'.split('_'),
+        monthsShort: 'Gen_Feb_Mar_Apr_Mag_Giu_Lug_Ago_Set_Ott_Nov_Dic'.split('_'),
+        firstDayOfWeek: 1
+      }
     }
   },
   methods: {
@@ -98,6 +126,20 @@ export default {
       'createContract',
       'updateContract'
     ]),
+    calendarDataScadenza (date) {
+      const currentTime = new Date()
+      const expirationTime = new Date()
+      this.addMonths(expirationTime, 1)
+      return (date >= currentTime.toLocaleDateString('fr-CA').replaceAll('-', '/') && date <= expirationTime.toLocaleDateString('fr-CA').replaceAll('-', '/'))
+    },
+    addMonths (date, months) {
+      var d = date.getDate()
+      date.setMonth(date.getMonth() + +months)
+      if (date.getDate() !== d) {
+        date.setDate(0)
+      }
+      return date
+    },
     openConfirmContractDialog () {
       const message = this.selectedContract ? 'Sei sicuro di voler modificare l\' appalto?' : 'Sei sicuro di voler caricare l\' appalto?'
       this.openConfirmDialog(null, message, this.loadContract)
@@ -120,6 +162,7 @@ export default {
           await this.updateContract(obj)
           message = 'Appalto modificato con successo!'
         } else {
+          this.contract.expirationDate = date.addToDate(date.extractDate(this.date, 'DD/MM/YYYY'), { hours: 2 })
           const obj = {
             body: this.contract
           }
@@ -149,6 +192,9 @@ export default {
   },
   validations () {
     return {
+      date: {
+        required
+      },
       contract: {
         entity: {
           required

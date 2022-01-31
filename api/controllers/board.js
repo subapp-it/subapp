@@ -150,7 +150,7 @@ exports.findFilteredRdos = async (req, res, next) => {
 
 exports.findAllRdos = async (req, res, next) => {
   await deleteExpiredRDO(next)
-  Rdo.find().sort('createdAt')
+  Rdo.find().sort('-createdAt')
     .then((rdos) => {
       res.status(200).json({
         rdos
@@ -165,7 +165,7 @@ exports.findAllRdos = async (req, res, next) => {
 }
 
 exports.findAllAvailments = async (req, res, next) => {
-  Availment.find().sort('createdAt')
+  Availment.find().sort('-createdAt')
       .then((availments) => {
         res.status(200).json({
           availments
@@ -179,9 +179,32 @@ exports.findAllAvailments = async (req, res, next) => {
       })
 }
 
-exports.findAllContracts = async (req, res, next) => {
+const deleteExpiredContracts = async (next) => {
   try {
-    const contracts = await Contract.find().sort('createdAt')
+    const contracts = await Contract.find({ expirationDate: { $lt: new Date() } })
+    if (contracts.length > 0) {
+      console.log('Contratti scaduti: ', contracts.length)
+      for (let contract of contracts) {
+        console.log(`Rimuovendo contractId ${contract._id}`)
+        await removeContract(contract._id)
+      }
+    } else {
+      console.log('Nessun Contratto scaduta.')
+    }
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+
+
+exports.findAllContracts = async (req, res, next) => {
+  await deleteExpiredContracts(next)
+  try {
+    const contracts = await Contract.find().sort('-createdAt')
     res.status(200).json({
       contracts
     })

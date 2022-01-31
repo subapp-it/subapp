@@ -3,9 +3,14 @@
     <div v-if="(userLogged && boardContractsLoaded)" class="flex column justify-center items-center q-pt-md">
       <div class="flex items-center">
         <h5 class="text-center no-margin">Lista appalti</h5>
+        <q-input   outlined
+                   v-model="searchString"
+                   type="text"
+                   label="Filtra per *"
+                   class="col-12 col-md-3 q-ml-md" />
         <q-btn v-if="userLogged.admin" round flat icon="add" class="q-ml-md" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false), selectedContract = null" />
       </div>
-      <contract-card v-for="(contract,index) in boardContracts" :contract="contract" :key="index" :index="index" class="q-mb-md" @modifyContract="modifyContract"></contract-card>
+      <contract-card v-for="(contract,index) in contractList" :contract="contract" :key="index" :index="index" class="q-mb-md" @modifyContract="modifyContract"></contract-card>
     </div>
     <div v-if="userLogged.admin && !boardContractsLoaded" class="flex column justify-center items-center q-pt-xl" >
       <h5 class="text-center no-margin q-pb-lg">Ancora nessun appalto caricato</h5>
@@ -14,7 +19,7 @@
     <div v-if="!userLogged.admin && !boardContractsLoaded" class="flex column justify-center items-center q-pt-xl" >
       <h5 class="text-center no-margin q-pb-lg">Ancora nessun appalto caricato</h5>
     </div>
-    <modal @resetSelectedContract='resetSelectedContract' :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle" :selected-contract="selectedContract"/>
+    <modal :class-obj="classObj" :modal.sync="modal" :is-maximized="isMaximized" :component="modalComponent" :title="modalTitle" :selected-contract="selectedContract"/>
   </q-page>
 </template>
 
@@ -35,7 +40,9 @@ export default {
       isMaximized: false,
       selectedContract: null,
       modal: false,
+      searchString: '',
       classObj: {},
+      contractList: [],
       loadContractClassObj: {
         'q-pa-none': true
       }
@@ -79,6 +86,20 @@ export default {
       handler (newVal, oldVal) {
         if (newVal.length !== oldVal.length) {
           this.boardContractsLoaded = newVal.length > 0
+          this.contractList = this.boardContracts
+        }
+      }
+    },
+    searchString: {
+      deep: true,
+      handler (newVal, oldVal) {
+        if (newVal.length !== oldVal.length && newVal !== '') {
+          this.contractList = this.boardContracts.filter((contract) => {
+            return contract.region === newVal || contract.typology === newVal
+          })
+        }
+        if (newVal === '') {
+          this.contractList = this.boardContracts
         }
       }
     }

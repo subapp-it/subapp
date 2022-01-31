@@ -34,6 +34,10 @@ const contractSchema = new Schema({
     link: {
         type: String,
         required: true
+    },
+    expirationDate: {
+        type: Date,
+        required: true
     }
 },
 { timestamps: true })

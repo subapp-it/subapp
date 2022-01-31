@@ -8,5 +8,6 @@ export default class availment {
     this.region = ''
     this.place = ''
     this.link = ''
+    this.expirationDate = undefined
   }
 }
