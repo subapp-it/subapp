@@ -35,6 +35,10 @@ const contractSchema = new Schema({
         type: String,
         required: true
     },
+    category: {
+        type: String,
+        required: true
+    },
     expirationDate: {
         type: Date,
         required: true

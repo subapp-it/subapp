@@ -51,13 +51,19 @@
                  :rules="[ (val) => isValid('place', val, $v.contract) ]"
                  class="col-12 col-md-3" />
       <q-input   outlined
+                 v-model="contract.category"
+                 type="text"
+                 label="Categoria *"
+                 reactive-rules name="subject"
+                 :rules="[ (val) => isValid('category', val, $v.contract) ]"
+                 class="col-12 col-md-3" />
+      <q-input   outlined
                  v-model="contract.subject"
                  type="textarea"
                  label="Oggetto *"
                  reactive-rules name="subject"
                  :rules="[ (val) => isValid('subject', val, $v.contract) ]"
                  class="col-12 col-md-3" />
-      <div class="desktop-only col-md-3"></div>
       <q-input  @click="$refs.qDateCertificateProxy.show()"
                 v-if="!selectedContract"
                 onkeydown="return false"
@@ -77,6 +83,8 @@
           </q-icon>
         </template>
       </q-input>
+      <div class="desktop-only col-md-3"></div>
+      <div class="desktop-only col-md-3"></div>
       <div class="col-12 row justify-center q-pt-md no-margin">
         <q-btn  push
                 :ripple="false"
@@ -212,6 +220,9 @@ export default {
           required
         },
         place: {
+          required
+        },
+        category: {
           required
         },
         link: {

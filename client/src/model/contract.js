@@ -1,4 +1,4 @@
-export default class availment {
+export default class contract {
   constructor () {
     this.entity = ''
     this.typology = ''
@@ -8,6 +8,7 @@ export default class availment {
     this.region = ''
     this.place = ''
     this.link = ''
+    this.category = ''
     this.expirationDate = undefined
   }
 }

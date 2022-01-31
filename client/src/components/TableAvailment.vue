@@ -90,9 +90,6 @@
           <q-icon v-if="props.row.availment.soaFile" class="text-accent cursor-pointer" name="file_download" style="font-size: 2rem" @click="downloadFile(props.row.availment.soaFile.Key)"></q-icon>
           <q-icon class="text-negative" v-else name="remove"></q-icon>
         </q-td>
-        <q-td :auto-width="true" key="viewAvailment" :props="props">
-          <q-icon style="font-size: 2rem;" name="search" @click="openAvailment(props.row.availment)" class="text-accent cursor-pointer"></q-icon>
-        </q-td>
         <q-td v-if="!allAvailments || (allAvailments && userLogged.admin)" :auto-width="true" key="deleteAvailment" :props="props">
           <q-icon style="font-size: 2rem;" name="delete_forever" class="text-negative cursor-pointer" @click="cancelAvailment(props.row.availment)"></q-icon>
         </q-td>
@@ -123,8 +120,7 @@ export default {
         { name: 'participationFee', required: true, label: 'Quota partec.', align: 'center' },
         { name: 'percentage', required: true, label: 'Percentuale', align: 'center' },
         { name: 'contact', required: true, label: 'Contatto', align: 'center' },
-        { name: 'soaFile', required: true, label: 'SOA', align: 'center' },
-        { name: 'viewAvailment', required: true, label: 'Visualizza avvalimento', align: 'center' }
+        { name: 'soaFile', required: true, label: 'SOA', align: 'center' }
       ],
       data: []
     }

@@ -34,6 +34,10 @@
         </div>
       </div>
       <div class="q-pb-md">
+        <span class="text-body1 text-weight-medium">Categoria: </span>
+        <span class="text-body2">{{ contract.category }}</span>
+      </div>
+      <div class="q-pb-md">
         <span class="text-body1 text-weight-medium">Scadenza: </span>
         <span class="text-body2">{{ date.formatDate(contract.expirationDate, 'DD-MM-YYYY') }}</span>
       </div>

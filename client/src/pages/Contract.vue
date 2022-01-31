@@ -6,7 +6,7 @@
         <q-input   outlined
                    v-model="searchString"
                    type="text"
-                   label="Filtra per *"
+                   label="Filtra per tipologia o regione"
                    class="col-12 col-md-3 q-ml-md" />
         <q-btn v-if="userLogged.admin" round flat icon="add" class="q-ml-md" color="accent" @click="openModal('load-contract', 'Carica Appalto', true, loadContractClassObj, false), selectedContract = null" />
       </div>
