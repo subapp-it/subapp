@@ -136,9 +136,7 @@ export default {
     ]),
     calendarDataScadenza (date) {
       const currentTime = new Date()
-      const expirationTime = new Date()
-      this.addMonths(expirationTime, 1)
-      return (date >= currentTime.toLocaleDateString('fr-CA').replaceAll('-', '/') && date <= expirationTime.toLocaleDateString('fr-CA').replaceAll('-', '/'))
+      return (date >= currentTime.toLocaleDateString('fr-CA').replaceAll('-', '/'))
     },
     addMonths (date, months) {
       var d = date.getDate()
