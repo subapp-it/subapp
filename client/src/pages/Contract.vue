@@ -95,7 +95,7 @@ export default {
       handler (newVal, oldVal) {
         if (newVal.length !== oldVal.length && newVal !== '') {
           this.contractList = this.boardContracts.filter((contract) => {
-            return contract.region === newVal || contract.typology === newVal
+            return contract.region.toLowerCase().includes(newVal.toLowerCase()) || contract.typology.toLowerCase().includes(newVal.toLowerCase())
           })
         }
         if (newVal === '') {

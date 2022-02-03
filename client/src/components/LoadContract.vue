@@ -199,7 +199,7 @@ export default {
   validations () {
     return {
       date: {
-        required
+        required: !!this.selectedContract
       },
       contract: {
         entity: {
